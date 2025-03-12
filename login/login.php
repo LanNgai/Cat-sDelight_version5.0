@@ -16,7 +16,7 @@
 </nav>
     <div class="login-container">
         <h3>Login</h3>
-        <form class="login-form" method="post" action="account.php">
+        <form class="login-form" method="post" action="login-validation.php">
             Your username:
             <br>
             <input type="text" name="username" required>
@@ -29,7 +29,7 @@
             <br>
             <input type="password" name="password" required>
             <br><br>
-            <input type="submit" value="submit">
+            <input type="submit" name="submit" value="submit">
         </form>
         <div class="links-container">
             <p>No account? <a href="../registration/registration.php">Register Here!</a></p>

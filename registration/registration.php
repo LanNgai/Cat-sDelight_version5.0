@@ -26,7 +26,7 @@
         <br>
         <input type="password" name="confirm_password" required>
         <br><br>
-        <input type="submit" value="submit">
+        <input type="submit" name="submit" value="submit">
     </form>
     <div class="links-container">
         <a href="../index.php">Go to Home Page</a><br><br>
