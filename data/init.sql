@@ -8,7 +8,7 @@ use catsdelight;
         Username VARCHAR(45) NOT NULL,
         Email VARCHAR(45) NOT NULL,
         Password VARCHAR(300) NOT NULL,
-        Bio TEXT DEFAULT 'Hello! I am a cat owner, I hope to find the best products for my kitties!',
+        Bio VARCHAR(300) DEFAULT 'Hello! I am a cat owner, I hope to find the best products for my kitties!',
         TotalLikes INT DEFAULT 0
     );
 
@@ -23,7 +23,7 @@ use catsdelight;
     );
 
     CREATE TABLE products(
-        ProductID INT PRIMARY KEY,
+        ProductID INT PRIMARY KEY AUTO_INCREMENT,
         Administrator_UserID INT,
         FOREIGN KEY (Administrator_UserID) REFERENCES administrator(UserID),
         ProductName VARCHAR(45) NOT NULL,
@@ -46,7 +46,7 @@ use catsdelight;
     );
 
     CREATE TABLE comments(
-        CommentID INT auto_increment PRIMARY KEY,
+        CommentID INT AUTO_INCREMENT PRIMARY KEY,
         ReviewID INT,
         FOREIGN KEY (ReviewID) REFERENCES reviews(ReviewID),
         RegularUser_UserID INT,
