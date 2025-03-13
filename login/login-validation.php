@@ -16,14 +16,13 @@ if (isset($_POST['submit'])) {
         $stmt->execute();
 
         $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo $user_data['Password'];
-        echo $user_password;
 
         // TODO: Remember to put hashed values for the passwords stored in the DB!!!
         if (!empty($user_data) && $user_password == $user_data['Password']) {
             header("Location: account.php?id=" . $user_data['UserID']);
             exit();
-        } else if($user_password != $user_data['Password']) {
+        } else {
+            var_dump($user_data['Password']);
             echo "Invalid password.";
         }
     } catch (PDOException $e) {

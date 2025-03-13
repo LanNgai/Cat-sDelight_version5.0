@@ -18,7 +18,6 @@
         $stmt->execute();
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        var_dump($result);
     }catch (PDOException $e){
         echo $e->getMessage();
     }
