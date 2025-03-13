@@ -30,7 +30,7 @@ use catsdelight;
         ProductType VARCHAR(45),
         ProductDescription TEXT NOT NULL,
         ProductManufacturer VARCHAR(45) NOT NULL,
-        ProductLink VARCHAR(45)NOT NULL
+        ProductLink VARCHAR(45) NOT NULL
     );
 
     CREATE TABLE reviews(
