@@ -4,12 +4,37 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $name = htmlspecialchars($_POST['username']);
+    require "../backend/dbConnect.php";
+    include "login-validation.php";
+    require "../templates/footer.php";
 
+    $id = clean($_GET['id']);
+
+    try {
+        $sql = "SELECT * FROM user WHERE UserID=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        var_dump($result);
+    }catch (PDOException $e){
+        echo $e->getMessage();
+    }
+    ?>
+
+    <?php
+    //TODO: Placeholder bio text
+    $bio_file = file('placeholders/bio.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $user = [
+        'name' => ($result['Username']),
+        'email' => ($result['Email']),
+        'bio' => $bio_file[0],
+        'profile_picture' => 'placeholder_pfp.jpg' //TODO: Placeholder image
+    ];
     ?>
     <title>
-        <?= "$name's Profile" ?>
+        <?= $user['name']."'s Profile" ?>
     </title>
     <link rel="stylesheet" href="css/account.css">
 </head>
@@ -32,17 +57,6 @@
         </div>
     </div>
 </nav>
-    <?php
-    //TODO: Placeholder bio text
-        $bio_file = file('placeholders/bio.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $user = [
-            'name' => htmlspecialchars($_POST['username']),
-            'email' => htmlspecialchars($_POST['email']),
-            'bio' => $bio_file[0],
-            'profile_picture' => 'placeholder_pfp.jpg' // TODO: Placeholder image
-        ];
-    }
-    ?>
     <div class="overall-profile-container">
         <div class="profile-container">
             <img src="<?= $user['profile_picture']; ?>" alt="Profile Picture" class="profile-picture"/>

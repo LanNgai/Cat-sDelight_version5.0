@@ -1,4 +1,5 @@
 <?php
+global $conn;
 if (isset($_POST['submit'])) {
 
     require "../backend/config.php";
@@ -9,8 +10,7 @@ if (isset($_POST['submit'])) {
 
     try {
 
-        $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
-
+        require "../backend/dbConnect.php";
         $stmt = $conn->prepare("SELECT UserID, Password FROM user WHERE Username = :user_username");
 
         $stmt->bindParam(':user_username', $user_username);
@@ -21,12 +21,11 @@ if (isset($_POST['submit'])) {
         echo $user_data['Password'];
         echo $user_password;
         // Verify the password
-        if (!empty($user_data) && password_verify($user_password, $user_data['Password'])) {
-            header("Location: account.php");
+        if (!empty($user_data) && $user_password == $user_data['Password']) {
+            header("Location: account.php?id=" . $user_data['UserID']);
             exit();
-        } else if(!password_verify($user_password, $user_data['Password'])) {
-            var_dump(password_verify($user_password, $user_data['Password']));
-            echo "Invalid username or password.";
+        } else if($user_password != $user_data['Password']) {
+            echo "Invalid password.";
         }
     } catch (PDOException $e) {
         echo "Database error: " . $e->getMessage();
