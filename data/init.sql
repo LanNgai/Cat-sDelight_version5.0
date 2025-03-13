@@ -9,7 +9,7 @@ use catsdelight;
         Email VARCHAR(45) NOT NULL,
         Password VARCHAR(300) NOT NULL,
         Bio TEXT DEFAULT 'Hello! I am a cat owner, I hope to find the best products for my kitties!',
-        TotalLikes INT DEFAULT 0,
+        TotalLikes INT DEFAULT 0
     );
 
     CREATE TABLE administrator (
@@ -22,7 +22,7 @@ use catsdelight;
         FOREIGN KEY (UserID) REFERENCES user(UserID)
     );
 
-    CREATE TABLE poducts(
+    CREATE TABLE products(
         ProductID INT PRIMARY KEY,
         Administrator_UserID INT,
         FOREIGN KEY (Administrator_UserID) REFERENCES administrator(UserID),
@@ -36,7 +36,7 @@ use catsdelight;
     CREATE TABLE reviews(
         ReviewID INT AUTO_INCREMENT PRIMARY KEY,
         ProductID INT,
-        FOREIGN KEY (ProductID) REFERENCES poducts(ProductID),
+        FOREIGN KEY (ProductID) REFERENCES products(ProductID),
         Administrator_UserID INT,
         FOREIGN KEY (Administrator_UserID) REFERENCES administrator(UserID),
         QualityRating INT,
@@ -49,8 +49,8 @@ use catsdelight;
         CommentID INT auto_increment PRIMARY KEY,
         ReviewID INT,
         FOREIGN KEY (ReviewID) REFERENCES reviews(ReviewID),
-        ReguralUser_UserID INT,
-        FOREIGN KEY (ReguralUser_UserID) references regularUser(UserID),
+        RegularUser_UserID INT,
+        FOREIGN KEY (RegularUser_UserID) references regularUser(UserID),
         CommentText TEXT NOT NULL,
         Likes INT DEFAULT 0,
         DateTime DATETIME

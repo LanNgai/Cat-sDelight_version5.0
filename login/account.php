@@ -11,6 +11,7 @@
     $id = clean($_GET['id']);
 
     try {
+
         $sql = "SELECT * FROM user WHERE UserID=:id";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':id', $id);
