@@ -4,7 +4,7 @@ CREATE DATABASE catsdelight;
 
 use catsdelight;
     CREATE TABLE user (
-        UserID INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        UserID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         Username VARCHAR(45) NOT NULL,
         Email VARCHAR(45) NOT NULL,
         Password VARCHAR(300) NOT NULL,
@@ -13,18 +13,18 @@ use catsdelight;
     );
 
     CREATE TABLE administrator (
-        UserID INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        UserID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         FOREIGN KEY (UserID) REFERENCES user(UserID)
     );
 
     CREATE TABLE regularUser (
-        UserID INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        UserID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         FOREIGN KEY (UserID) REFERENCES user(UserID)
     );
 
     CREATE TABLE products(
         ProductID INT PRIMARY KEY AUTO_INCREMENT,
-        Administrator_UserID INT,
+        Administrator_UserID INT UNSIGNED,
         FOREIGN KEY (Administrator_UserID) REFERENCES administrator(UserID),
         ProductName VARCHAR(45) NOT NULL,
         ProductType VARCHAR(45),
@@ -37,7 +37,7 @@ use catsdelight;
         ReviewID INT AUTO_INCREMENT PRIMARY KEY,
         ProductID INT,
         FOREIGN KEY (ProductID) REFERENCES products(ProductID),
-        Administrator_UserID INT,
+        Administrator_UserID INT UNSIGNED,
         FOREIGN KEY (Administrator_UserID) REFERENCES administrator(UserID),
         QualityRating INT,
         PriceRating INT,
@@ -49,7 +49,7 @@ use catsdelight;
         CommentID INT AUTO_INCREMENT PRIMARY KEY,
         ReviewID INT,
         FOREIGN KEY (ReviewID) REFERENCES reviews(ReviewID),
-        RegularUser_UserID INT,
+        RegularUser_UserID INT UNSIGNED,
         FOREIGN KEY (RegularUser_UserID) references regularUser(UserID),
         CommentText TEXT NOT NULL,
         Likes INT DEFAULT 0,
