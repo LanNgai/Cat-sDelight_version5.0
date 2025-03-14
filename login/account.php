@@ -7,8 +7,13 @@
     require "../backend/config.php";
     include "login-validation.php";
     require "../templates/footer.php";
+    require "userProfile.class.php";
 
-    $id = clean($_GET['id']);
+    $userProfile = new UserProfile();
+    $userProfile->__setID(clean($_GET["id"]));
+
+
+    $id = $userProfile->__getID();
 
     try {
 

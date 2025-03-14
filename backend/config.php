@@ -1,6 +1,6 @@
 <?php
 
-include 'dbConnect.php';
+include 'dbConnect.class.php';
 
 $host = "localhost";
 $dbname = "catsdelight";
