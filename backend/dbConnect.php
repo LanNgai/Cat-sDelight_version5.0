@@ -1,9 +1,13 @@
 <?php
 
-try {
-    require 'config.php';
-    $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $password, $options);
-    
-}catch (PDOException $e){
-    echo $e->getMessage();
+class dbConnect
+{
+    public function __connect($dsn, $user, $password, $options){
+        global $conn;
+        try {
+            $conn = new PDO($dsn, $user, $password, $options);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 }

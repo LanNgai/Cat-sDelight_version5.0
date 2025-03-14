@@ -3,7 +3,7 @@ global $conn;
 if (isset($_POST['submit'])) {
 
     include "../templates/footer.php";
-    require "../backend/dbConnect.php";
+    require "../backend/config.php";
 
     $user_username = clean($_POST['username']);
     $user_password = clean($_POST['password']);

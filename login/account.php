@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php
-    require "../backend/dbConnect.php";
+    require "../backend/config.php";
     include "login-validation.php";
     require "../templates/footer.php";
 

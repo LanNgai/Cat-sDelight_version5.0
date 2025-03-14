@@ -1,4 +1,0 @@
-INSERT INTO catsdelight.user (UserID, Username, Email, Password, Bio, TotalLikes) VALUES (1, 'Lan', 'lanngai79@gmail.com', '123', 'Hello! I am a cat owner, I hope to find the best products for my kitties!', 0);
-INSERT INTO catsdelight.user (UserID, Username, Email, Password, Bio, TotalLikes) VALUES (2, 'Fausta', 'f@gmail.com', '456', 'Hello! I am a cat owner, I hope to find the best products for my kitties!', 0);
-INSERT INTO catsdelight.user (UserID, Username, Email, Password, Bio, TotalLikes) VALUES (3, 'Kevin', 'k@gmail.com', '789', 'Hello! I am a cat owner, I hope to find the best products for my kitties!', 0);
-INSERT INTO catsdelight.user (UserID, Username, Email, Password, Bio, TotalLikes) VALUES (4, 'RobertS', 'rsmith@hotmail.com', 'qwe', 'Hello! I am a cat owner, I hope to find the best products for my kitties!', 0);
