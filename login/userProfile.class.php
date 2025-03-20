@@ -9,26 +9,31 @@ class userProfile
     private $bio;
     private $picture;
 
-    /*---------------------------Setters-----------------------------*/
-    public function __setID($id) {
-        $this->id = $id;
-    }
-    public function __setUsername($username) {
-        $this->username = $username;
-    }
-    public function __setPassword($password) {
-        $this->password = $password;
-    }
-    public function __setEmail($email) {
-        $this->email = $email;
-    }
-    public function __setBio($bio) {
-        $this->bio = $bio;
-    }
-    public function __setPicture($picture) {
-        $this->picture = $picture;
+    public function __loadProfile($id)
+    {
+        try {
+            require "../backend/config.php";
+
+            $sql = "SELECT * FROM user WHERE UserID=:id";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->__constructProfile($result['Username'], $result['Email'], $result['Password'], $result['Bio'], $result['Picture']);
+        }catch (PDOException $e){
+            echo $e->getMessage();
+        }
     }
 
+    public function __constructProfile($username, $email, $password, $bio, $picture)
+    {
+        $this->username = $username;
+        $this->email = $email;
+        $this->password = $password;
+        $this->bio = $bio;
+        $this->picture = $picture;
+    }
     /*---------------------------Getters-----------------------------*/
 
     public function __getID() {

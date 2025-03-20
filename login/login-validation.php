@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
 
         // TODO: Remember to put hashed values for the passwords stored in the DB!!!
         if (!empty($user_data) && $user_password == $user_data['Password']) {
-            header("Location: account.php?id=" . $user_data['UserID']);
+            header("Location: displayProfile.php?id=" . $user_data['UserID']);
             exit();
         } else {
             var_dump($user_data['Password']);

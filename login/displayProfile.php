@@ -10,36 +10,10 @@
     require "userProfile.class.php";
 
     $userProfile = new UserProfile();
-    $userProfile->__setID(clean($_GET["id"]));
-
-
-    $id = $userProfile->__getID();
-
-    try {
-
-        $sql = "SELECT * FROM user WHERE UserID=:id";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':id', $id);
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    }catch (PDOException $e){
-        echo $e->getMessage();
-    }
-    ?>
-
-    <?php
-    //TODO: Placeholder bio text
-    $bio_file = file('placeholders/bio.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    $user = [
-        'name' => ($result['Username']),
-        'email' => ($result['Email']),
-        'bio' => $bio_file[0],
-        'profile_picture' => 'placeholder_pfp.jpg' //TODO: Placeholder image
-    ];
+    $userProfile->__loadProfile(clean($_GET["id"]));
     ?>
     <title>
-        <?= $user['name']."'s Profile" ?>
+        <?= $userProfile->__getUsername()."'s Profile" ?>
     </title>
     <link rel="stylesheet" href="css/account.css">
 </head>
@@ -64,16 +38,16 @@
 </nav>
     <div class="overall-profile-container">
         <div class="profile-container">
-            <img src="<?= $user['profile_picture']; ?>" alt="Profile Picture" class="profile-picture"/>
+            <img src="placeholders/<?= $userProfile->__getPicture(); ?>" alt="Profile Picture" class="profile-picture"/>
             <div class="profile-details">
                 <h2 class="profile-name">
-                    <?= $user['name']; ?>
+                    <?= $userProfile->__getUsername(); ?>
                 </h2>
                 <h3 class="profile-email">
-                    <?= $user['email']; ?>
+                    <?= $userProfile->__getEmail(); ?>
                 </h3>
                 <p class="profile-bio">
-                    <?= $user['bio']; ?>
+                    <?= $userProfile->__getBio(); ?>
                 </p>
             </div>
         </div>
