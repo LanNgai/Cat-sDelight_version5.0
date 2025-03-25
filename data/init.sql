@@ -22,7 +22,7 @@ use catsdelight;
     
     CREATE TABLE profile (
 		ProfileID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        UserLoginID INT,
+        UserLoginID INT UNSIGNED,
         FOREIGN KEY (UserLoginID) REFERENCES user(UserLoginID),
         Bio VARCHAR(300) DEFAULT 'Hello! I am a cat owner, I hope to find the best products for my kitties!',
         ProfileImage VARCHAR(45),
@@ -64,8 +64,61 @@ use catsdelight;
         DateAndTime DATETIME
     );
 
-INSERT INTO catsdelight.user (UserID, Username, Email, Password, Bio, TotalLikes) VALUES (1, 'Lan', 'lanngai79@gmail.com', '123', 'Hello! I am a cat owner, I hope to find the best products for my kitties!', 0);
-INSERT INTO catsdelight.user (UserID, Username, Email, Password, Bio, TotalLikes) VALUES (2, 'Fausta', 'f@gmail.com', '456', 'Hello! I am a cat owner, I hope to find the best products for my kitties!', 0);
-INSERT INTO catsdelight.user (UserID, Username, Email, Password, Bio, TotalLikes) VALUES (3, 'Kevin', 'k@gmail.com', '789', 'Hello! I am a cat owner, I hope to find the best products for my kitties!', 0);
-INSERT INTO catsdelight.user (UserID, Username, Email, Password, Bio, TotalLikes) VALUES (4, 'RobertS', 'rsmith@hotmail.com', 'qwe', 'Hello! I am a cat owner, I hope to find the best products for my kitties!', 0);
-INSERT INTO catsdelight.user (UserID, Username, Email, Password, Bio, TotalLikes) VALUES (5, 'Nathan', 'johnbarry21@hotmail.com', 'applejohn52', 'Hello! I am a cat owner, I hope to find the best products for my kitties!', 0);
+/*-----------------------------Next user------------------------------*/
+
+-- Insert into login
+INSERT INTO login (Username, Email, Password)
+VALUES ('Lan', 'lanngai79@gmail.com', '123');
+
+-- Link to user
+INSERT INTO administrator (AdminLoginID)
+VALUES (LAST_INSERT_ID());
+
+/*-----------------------------Next user------------------------------*/
+-- Insert into login
+INSERT INTO login (Username, Email, Password)
+VALUES ('Fausta', 'f@gmail.com', '456');
+
+-- Link to user
+INSERT INTO administrator (AdminLoginID)
+VALUES (LAST_INSERT_ID());
+
+/*-----------------------------Next user------------------------------*/
+-- Insert into login
+INSERT INTO login (Username, Email, Password)
+VALUES ('Kevin', 'k@gmail.com', '789');
+
+-- Link to user
+INSERT INTO user (UserLoginID)
+VALUES (LAST_INSERT_ID());
+
+-- Create profile for the user
+INSERT INTO profile (UserLoginID)
+VALUES (LAST_INSERT_ID());
+
+/*-----------------------------Next user------------------------------*/
+-- Insert into login
+INSERT INTO login (Username, Email, Password)
+VALUES ('RobertS', 'rsmith@hotmail.com', 'qwe');
+
+-- Link to user
+INSERT INTO user (UserLoginID)
+VALUES (LAST_INSERT_ID());
+
+-- Create profile for the user
+INSERT INTO profile (UserLoginID)
+VALUES (LAST_INSERT_ID());
+
+/*-----------------------------Next user------------------------------*/
+-- Insert into login
+INSERT INTO login (Username, Email, Password)
+VALUES ('Nathan', 'johnbarry21@hotmail.com', 'applejohn52');
+
+-- Link to user
+INSERT INTO user (UserLoginID)
+VALUES (LAST_INSERT_ID());
+
+-- Create profile for the user
+INSERT INTO profile (UserLoginID)
+VALUES (LAST_INSERT_ID());
+

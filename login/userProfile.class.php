@@ -12,11 +12,20 @@ class userProfile
     public function __loadProfile($id)
     {
         try {
-            require "../backend/config.php";
+            require "../backend/DBconnect.php";
 
-            $sql = "SELECT * FROM user WHERE UserID=:id";
+            $sql = "SELECT login.Username, 
+                            login.Email, 
+                            login.Password,
+                            profile.Bio,
+                            profile.ProfileImage AS Picture
+                            FROM login
+                            JOIN user ON login.LoginID = user.UserLoginID
+                            JOIN profile ON user.UserLoginID = profile.UserLoginID
+                            WHERE login.LoginID = :id";
+
             $stmt = $conn->prepare($sql);
-            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
