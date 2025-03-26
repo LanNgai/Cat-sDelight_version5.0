@@ -2,8 +2,8 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/data/init.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/login/UserProfile.class.php" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/login/login-validation.php" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/login/userProfile.class.php" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/products/products.class.php" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/registration/register.php" dialect="MySQL" />
   </component>

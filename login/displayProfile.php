@@ -7,16 +7,40 @@
     require "../backend/config.php";
     include "login-validation.php";
     require "../templates/footer.php";
-    require "userProfile.class.php";
-    require "login.class.php";
+    require "UserProfile.class.php";
+    require "Login.class.php";
+    require "User.class.php";
 
-    $login = new Login();
-    $login->__loadProfile(clean($_GET["id"]));
+    $id = clean($_GET["id"]);
+    try {
+        require "../backend/DBconnect.php";
 
-    $userProfile = new userProfile();
+        $sql = "SELECT login.Username, 
+                            login.Email, 
+                            login.Password,
+                            profile.Bio,
+                            profile.ProfileImage AS Picture
+                            FROM login
+                            JOIN user ON login.LoginID = user.UserLoginID
+                            JOIN profile ON user.UserLoginID = profile.UserLoginID
+                            WHERE login.LoginID = :id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        var_dump($result);
+    }catch (PDOException $e){
+        echo $e->getMessage();
+    }
+
+    $login = new Login($id, $result["Username"], $result["Email"], $result["Password"]);
+    $userProfile = new UserProfile($result["Bio"], $result["Picture"]);
+    $user = new User($id, $result["Username"], $result["Email"], $result["Password"], $userProfile);
     ?>
     <title>
-        <?= $userProfile->__getUsername()."'s Profile" ?>
+        <?= $login->getUsername()."'s Profile" ?>
     </title>
     <link rel="stylesheet" href="css/account.css">
 </head>
@@ -41,16 +65,16 @@
 </nav>
     <div class="overall-profile-container">
         <div class="profile-container">
-            <img src="placeholders/<?= $userProfile->__getPicture(); ?>" alt="Profile Picture" class="profile-picture"/>
+            <img src="../data/images/placeholders/<?= $userProfile->getPicture(); ?>" alt="Profile Picture" class="profile-picture"/>
             <div class="profile-details">
                 <h2 class="profile-name">
-                    <?= $userProfile->__getUsername(); ?>
+                    <?= $login->getUsername(); ?>
                 </h2>
                 <h3 class="profile-email">
-                    <?= $userProfile->__getEmail(); ?>
+                    <?= $login->getEmail(); ?>
                 </h3>
                 <p class="profile-bio">
-                    <?= $userProfile->__getBio(); ?>
+                    <?= $userProfile->getBio(); ?>
                 </p>
             </div>
         </div>
