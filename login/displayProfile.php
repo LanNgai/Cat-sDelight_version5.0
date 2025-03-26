@@ -8,9 +8,12 @@
     include "login-validation.php";
     require "../templates/footer.php";
     require "userProfile.class.php";
+    require "login.class.php";
 
-    $userProfile = new UserProfile();
-    $userProfile->__loadProfile(clean($_GET["id"]));
+    $login = new Login();
+    $login->__loadProfile(clean($_GET["id"]));
+
+    $userProfile = new userProfile();
     ?>
     <title>
         <?= $userProfile->__getUsername()."'s Profile" ?>
