@@ -13,6 +13,7 @@ class Product
     public function __construct($productName, $productType, $productDescription, $productManufacturer, $productImage, $productLink)
     {
         $this->productName = $productName;
+        $this->productType = $productType;
         $this->productDescription = $productDescription;
         $this->productManufacturer = $productManufacturer;
         $this->productImage = $productImage;
@@ -38,6 +39,24 @@ class Product
             echo $e->getMessage();
         }
     }
+    public function __loadAllProducts()
+    {
+        try {
+            require "../backend/config.php";
+
+            $sql = "SELECT ProductName, ProductType, ProductManufacturer, ProductImage
+                    FROM products;";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->
+                $ew
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 
     public function getProductID()
     {
@@ -53,7 +72,9 @@ class Product
     {
         return $this->productName;
     }
-
+    public function getProductType(){
+        return $this->productType;
+    }
     public function getProductDescription()
     {
         return $this->productDescription;
