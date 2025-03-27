@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php
+<?php require "../templates/header.php"?>
+
+<?php
     require "../backend/config.php";
     include "login-validation.php";
     require "../templates/footer.php";
@@ -30,7 +27,6 @@
         $stmt->execute();
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        var_dump($result);
     }catch (PDOException $e){
         echo $e->getMessage();
     }

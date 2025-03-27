@@ -1,6 +1,6 @@
 <?php
 
-class user extends login
+class User extends Login
 {
     private $profile;
  public function __construct($loginID, $username, $password, $email, $profile)

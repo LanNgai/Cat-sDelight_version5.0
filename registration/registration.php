@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Registration Page</title>
+<?php require "../templates/header.php"?>
+<title>Registration Page</title>
     <link rel="stylesheet" href="registration.css">
 </head>
 <body>
