@@ -1,6 +1,23 @@
 <link rel="stylesheet" href="css/Reviews.css">
 <?php
-    $reviewData = file('reviewData.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    require "../reviews/Review.class.php";
+    require "../templates/header.php";
+    require "../templates/footer.php";
+
+try {
+        require "../backend/DBconnect.php";
+
+        $sql = "SELECT *
+            FROM reviews
+            JOIN products ON reviews.ProductID = products.ProductID";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $reviewData = $stmt->fetchALL();
+    }catch (PDOException $e){
+        echo $e->getMessage();
+    }
+
 
     echo "<nav>
             <div class='top-nav'>
@@ -16,20 +33,21 @@
     if (empty($reviewData)) {
         echo "There are no reviews yet.";
     } else {
-        foreach ($reviewData as $index => $review) {
-            list($category, $pname, $qualityRating, $priceRating, $averageRating, $reviewText, $url) = explode('|', $review);
+        foreach ($reviewData as $row) {
             echo "<div class='box'>";
             echo "<div class='thumbnail'>
-                    <img src='PlaceHolder.png' alt='Placeholder product image'>
+                    <img src='../data/images/".$row['ProductImage']."' alt='Placeholder product image'>
                     </div>";
 
+            $averageRating = ($row['QualityRating'] + $row['PriceRating'])/2;
+
             echo "<div class='review'>";
-            echo "<strong>Category:</strong> $category<br>";
-            echo "<strong>Product Name:</strong> $pname<br>";
-            echo "<strong>Quality Rating:</strong> $qualityRating/5<br>";
-            echo "<strong>Price Rating:</strong> $priceRating/5<br>";
+            echo "<strong>Category:</strong>".$row['ProductType']."<br>";
+            echo "<strong>Product Name:</strong>".$row['ProductName']."<br>";
+            echo "<strong>Quality Rating:</strong>".$row['QualityRating']."/5<br>";
+            echo "<strong>Price Rating:</strong> ".$row['PriceRating']."/5<br>";
             echo "<strong>Overall Rating:</strong> $averageRating/5<br>";
-            echo "<a href='productReview.php?id=$index'>Read Full Review</a><br><br>";
+            echo "<a href='productReview.php?id='".$row['ReviewID'].">Read Full Review</a><br><br>";
             echo "</div>";
             echo "</div>";
 

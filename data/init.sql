@@ -122,3 +122,13 @@ VALUES (LAST_INSERT_ID());
 INSERT INTO profile (UserLoginID)
 VALUES (LAST_INSERT_ID());
 
+/*-----------------------------Products------------------------------*/
+
+INSERT INTO catsdelight.products (ProductID, AdminLoginID, ProductName, ProductType, ProductDescription, ProductManufacturer, ProductImage, ProductLink)
+VALUES (1, 1, 'Automatic Cat Feeder with Timer for 2 Cats', 'Misc', '𝐍𝐨 𝐖𝐚𝐢𝐭𝐢𝐧𝐠, 𝐒𝐚𝐭𝐢𝐬𝐟𝐲 𝐓𝐡𝐞𝐢𝐫 𝐏𝐨𝐬𝐬𝐞𝐬𝐬𝐢𝐯𝐞𝐧𝐞𝐬𝐬: Cats are often possessive about their food and we hope to satisfy this adorable desire. oneisall PFD002 automatic cat feeder for 2 cats, no sharing, no waiting, symmetrical design, safeguarding their sense of security when eating', 'oneisall', 'feeder.jpg', 'link');
+
+/*-----------------------------Reviews------------------------------*/
+
+INSERT INTO catsdelight.reviews (ReviewID, ProductID, AdminLoginID, QualityRating, PriceRating, ReviewText, DateAndTime)
+VALUES (2, 1, 1, 4, 4, 'I’m super impressed with this automatic cat feeder! One of my top priorities was ensuring each of my cats had their own bowl, and this design works perfectly for that. The setup process was straightforward, and I had it up and running in no time. The food storage compartment is secure, giving me peace of mind that the food stays fresh and safe.', '2025-03-22 16:00:00');
+

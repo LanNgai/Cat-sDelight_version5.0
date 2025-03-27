@@ -31,12 +31,11 @@
         echo $e->getMessage();
     }
 
-    $login = new Login($id, $result["Username"], $result["Email"], $result["Password"]);
     $userProfile = new UserProfile($result["Bio"], $result["Picture"]);
     $user = new User($id, $result["Username"], $result["Email"], $result["Password"], $userProfile);
     ?>
     <title>
-        <?= $login->getUsername()."'s Profile" ?>
+        <?= $user->getUsername()."'s Profile" ?>
     </title>
     <link rel="stylesheet" href="css/account.css">
 </head>
@@ -64,10 +63,10 @@
             <img src="../data/images/placeholders/<?= $userProfile->getPicture(); ?>" alt="Profile Picture" class="profile-picture"/>
             <div class="profile-details">
                 <h2 class="profile-name">
-                    <?= $login->getUsername(); ?>
+                    <?= $user->getUsername(); ?>
                 </h2>
                 <h3 class="profile-email">
-                    <?= $login->getEmail(); ?>
+                    <?= $user->getEmail(); ?>
                 </h3>
                 <p class="profile-bio">
                     <?= $userProfile->getBio(); ?>

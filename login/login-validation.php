@@ -9,7 +9,7 @@ if (isset($_POST['submit'])) {
     $user_password = clean($_POST['password']);
 
     try {
-
+        session_start();
         $stmt = $conn->prepare("SELECT LoginID, Username, Password FROM login WHERE Username = ?");
         $stmt->execute([$user_username]);
         $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -24,11 +24,11 @@ if (isset($_POST['submit'])) {
         // TODO: Remember to put hashed values for the passwords stored in the DB!!!
         if (!empty($user_data) && $user_password == $user_data['Password']) {
             if($user_data['LoginID'] == $user_ID['UserLoginID']) {
-                session_start();
+                $_SESSION['login'] == true;
                 header("Location: displayProfile.php?id=" . $user_data['LoginID']);
                 exit();
             } else if ($user_data['LoginID'] == $admin_ID['AdminLoginID']) {
-                session_start();
+                $_SESSION['login'] == true;
                 header("Location: adminPage.php?id=" . $user_data['LoginID']);
                 exit();
             }

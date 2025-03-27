@@ -5,13 +5,20 @@ if (!isset($_GET['id'])) {
 }
 
 $reviewId = $_GET['id'];
-$reviewData = file('reviewData.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
-if (!isset($reviewData[$reviewId])) {
-    die("Invalid review ID.");
+try {
+    require "../backend/DBconnect.php";
+
+    $sql = "SELECT *
+            FROM reviews
+            JOIN products ON reviews.ProductID = products.ProductID";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $reviewData = $stmt->fetch(PDO::FETCH_ASSOC);
+}catch (PDOException $e) {
+    echo $e->getMessage();
 }
-
-list($category, $pname, $qualityRating, $priceRating, $averageRating, $reviewText, $url) = explode('|', $reviewData[$reviewId]);
 
 echo "<nav>
         <div class='top-nav'>
@@ -23,15 +30,18 @@ echo "<nav>
       </nav>";
 echo "<div class='box'>";
 echo "<div class='thumbnail'>
-        <img src='PlaceHolder.png' alt='Placeholder product image'>
+        <img src='../data/images/".$reviewData['ProductImage']."' alt='Placeholder product image'>
       </div>";
+$averageRating = ($reviewData['QualityRating'] + $reviewData['PriceRating'])/2;
+
 echo "<div class='review'>";
-echo "<h2>$pname</h2>";
-echo "<strong>Quality Rating:</strong> $qualityRating/5<br>";
-echo "<strong>Price Rating:</strong> $priceRating/5<br>";
+echo "<h2>".$reviewData['ProductName']."</h2>";
+echo "<strong>Category:</strong>".$reviewData['ProductType']."<br>";
+echo "<strong>Product Name:</strong>".$reviewData['ProductName']."<br>";
+echo "<strong>Quality Rating:</strong>".$reviewData['QualityRating']."/5<br>";
+echo "<strong>Price Rating:</strong> ".$reviewData['PriceRating']."/5<br>";
 echo "<strong>Overall Rating:</strong> $averageRating/5<br>";
-echo "<strong>Review:</strong><br> $reviewText<br>";
-echo "<strong>Product Link:</strong><br> <a href='$url'>$url</a><br>";
+echo "<strong>Product Link:</strong><br> <a href='".$reviewData['ProductLink'].">".$reviewData['ProductLink']."</a><br>";
 echo "<br><a href='reviews.php' id='back'>Back to All Reviews</a>";
 echo "</div>";
 echo "</div>";
