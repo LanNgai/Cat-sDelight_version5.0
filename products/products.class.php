@@ -10,7 +10,7 @@ class Product
     private $productImage;
     private $productLink;
 
-    public function __construct($productName, $productType, $productDescription, $productManufacturer, $productImage, $productLink)
+    public function __construct($productName, $productType, $productDescription, $productManufacturer, $productImage, $productLink, $productID = null, $adminLoginID = null)
     {
         $this->productName = $productName;
         $this->productType = $productType;
@@ -21,10 +21,10 @@ class Product
     }
 
     // show singular
-    public function __loadOneProduct($id)
+    public static function loadOneProduct($id)
     {
         try {
-            require "../backend/config.php";
+            require "../backend/DBconnect.php";
 
             $sql = "SELECT ProductName, ProductType, ProductDescription, ProductManufacturer, ProductImage, ProductLink 
                     FROM products 
@@ -34,27 +34,50 @@ class Product
             $stmt->execute();
 
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            $this->__construct($result['ProductName'], $result['ProductType'], $result['ProductDescription'], $result['ProductManufacturer'], $result['ProductImage'], $result['ProductLink']);
+            if ($result) {
+                return new self(
+                    $result['ProductName'],
+                    $result['ProductType'],
+                    $result['ProductDescription'],
+                    $result['ProductManufacturer'],
+                    $result['ProductImage'],
+                    $result['ProductLink']
+                );
+            }
+            return null;
         } catch (PDOException $e) {
             echo $e->getMessage();
+            return null;
         }
     }
-    public function __loadAllProducts()
+    //show all
+    public static function loadAllProducts()
     {
         try {
-            require "../backend/config.php";
+            require "../backend/DBconnect.php";
 
-            $sql = "SELECT ProductName, ProductType, ProductManufacturer, ProductImage
-                    FROM products;";
+            $sql = "SELECT ProductID, ProductName, ProductType, ProductManufacturer, ProductImage, ProductLink
+                    FROM products";
             $stmt = $conn->prepare($sql);
-            $stmt->bindValue(':id', $id);
             $stmt->execute();
 
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            $this->
-                $ew
+            $products = [];
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $product = new self(
+                    $row['ProductName'],
+                    $row['ProductType'],
+                    '',
+                    $row['ProductManufacturer'],
+                    $row['ProductImage'],
+                    $row['ProductLink']
+                );
+                $product->productID = $row['ProductID'];
+                $products[] = $product;
+            }
+            return $products;
         } catch (PDOException $e) {
             echo $e->getMessage();
+            return [];
         }
     }
 

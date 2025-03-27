@@ -1,4 +1,4 @@
-
+DROP DATABASE IF EXISTS catsdelight;
 CREATE DATABASE catsdelight;
 
 
@@ -38,7 +38,7 @@ use catsdelight;
         ProductDescription TEXT NOT NULL,
         ProductManufacturer VARCHAR(45) NOT NULL,
         ProductImage VARCHAR(45) DEFAULT NULL,
-        ProductLink VARCHAR(45) NOT NULL
+        ProductLink VARCHAR(300) NOT NULL
     );
 
     CREATE TABLE reviews(

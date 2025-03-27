@@ -51,19 +51,24 @@ h1 {
     border-radius: 10px;
 }
 
-.box{
+.box {
     display: flex;
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 20px auto;
-    width: 100%;
+    width: 40%;
     max-width: 1000px;
+    align-items: center;
 }
 
 .product strong {
     color: #333;
+}
+.product {
+    flex: 1;
+    margin: 20px;
 }
 
 .product a {
@@ -75,6 +80,7 @@ h1 {
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
+    justify-content: center;
 }
 
 .product a:hover {
