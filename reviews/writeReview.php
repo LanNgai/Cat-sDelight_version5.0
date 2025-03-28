@@ -1,3 +1,17 @@
+<?php
+session_start();
+require "../products/products.class.php";
+require "../backend/DBconnect.php";
+
+$sql = "SELECT p.ProductID, p.ProductName, p.ProductType
+        FROM products p
+        LEFT JOIN reviews r ON p.ProductID = r.ProductID
+        WHERE r.ReviewID IS NULL";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$unreviewedProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -11,27 +25,30 @@
                 <a href='../login/login.php'>Login</a>
             </div>
         </nav>
-
         <title>Write a Review</title>
     </head>
     <body>
         <form method="post" action="postReview.php" enctype="multipart/form-data">
             <div class="review">
-                <h1 id="title">Write a review</h1>
-                <label for="category"> Choose a category</label>
-                <br>
-                <select id="category" name="category" required>
-                    <option value="Toy">Toy</option>
-                    <option value="Food">Food</option>
-                    <option value="Litter">Litter</option>
-                    <option value="Misc">Miscellaneous</option>
-                </select>
+                <h1 id="title">Write a Review</h1>
 
-                <br><br>
-
-                <label for="pname">Product name</label>
+                <label for="productID">Select a Product</label>
                 <br>
-                <input type="text" id="pname" name="pname" required>
+                <?php if (empty($unreviewedProducts)): ?>
+                    <p>No products available to review.</p>
+                    <select id="productID" name="productID" disabled>
+                        <option value="">-- Choose a Product --</option>
+                    </select>
+                <?php else: ?>
+                    <select id="productID" name="productID" required>
+                        <option value="">-- Choose a Product --</option>
+                        <?php foreach ($unreviewedProducts as $product): ?>
+                            <option value="<?php echo htmlspecialchars($product['ProductID']); ?>">
+                                <?php echo htmlspecialchars($product['ProductName'] . " (" . $product['ProductType'] . ")"); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif; ?>
 
                 <br><br>
 
@@ -49,6 +66,7 @@
                 </div>
 
                 <br>
+
                 <label for="photo">Upload a photo of the product:</label>
                 <br>
                 <input type="file" id="photo" name="photo" accept="image/*">
@@ -61,16 +79,8 @@
 
                 <br><br>
 
-                <label>Link to Product</label>
-                <br>
-                <input type="url" id="url" name="url" required>
-
-                <br><br>
-
-                <input type="submit" value="Submit" id="submit">
+                <input type="submit" value="Submit" id="submit" <?php echo empty($unreviewedProducts) ? 'disabled' : ''; ?>>
             </div>
         </form>
     </body>
 </html>
-
-

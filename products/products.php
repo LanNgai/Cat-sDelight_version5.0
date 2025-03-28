@@ -32,7 +32,7 @@
             <div class='box'>
                 <div class='thumbnail'>
                     <?php
-                    $imagePath = $product->getProductImage() ?: '../reviews/PlaceHolder.png';
+                    $imagePath = $product->getProductImage() ?: '../data/images/placeholders/PlaceHolderProduct.png';
                     ?>
                     <img src='<?php echo htmlspecialchars($imagePath); ?>' alt='Product image'>
                 </div>

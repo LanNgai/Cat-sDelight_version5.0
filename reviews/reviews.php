@@ -4,7 +4,7 @@
     require "../templates/header.php";
     require "../templates/footer.php";
 
-try {
+    try {
         require "../backend/DBconnect.php";
 
         $sql = "SELECT *
@@ -36,7 +36,7 @@ try {
         foreach ($reviewData as $row) {
             echo "<div class='box'>";
             echo "<div class='thumbnail'>
-                    <img src='../data/images/".$row['ProductImage']."' alt='Placeholder product image'>
+                    <img src='../data/images/placeholders/PlaceHolderProduct.png".$row['ProductImage']."' alt='Placeholder product image'>
                     </div>";
 
             $averageRating = ($row['QualityRating'] + $row['PriceRating'])/2;

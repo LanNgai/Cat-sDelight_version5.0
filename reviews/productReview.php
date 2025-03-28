@@ -30,7 +30,7 @@ echo "<nav>
       </nav>";
 echo "<div class='box'>";
 echo "<div class='thumbnail'>
-        <img src='../data/images/".$reviewData['ProductImage']."' alt='Placeholder product image'>
+        <img src='../data/images/placeholders/PlaceHolderProduct.png' alt='Placeholder product image'>
       </div>";
 $averageRating = ($reviewData['QualityRating'] + $reviewData['PriceRating'])/2;
 
@@ -41,7 +41,7 @@ echo "<strong>Product Name:</strong>".$reviewData['ProductName']."<br>";
 echo "<strong>Quality Rating:</strong>".$reviewData['QualityRating']."/5<br>";
 echo "<strong>Price Rating:</strong> ".$reviewData['PriceRating']."/5<br>";
 echo "<strong>Overall Rating:</strong> $averageRating/5<br>";
-echo "<strong>Product Link:</strong><br> <a href='".$reviewData['ProductLink'].">".$reviewData['ProductLink']."</a><br>";
+echo "<strong>Review:</strong>".$reviewData['ReviewText']."<br>";
 echo "<br><a href='reviews.php' id='back'>Back to All Reviews</a>";
 echo "</div>";
 echo "</div>";
