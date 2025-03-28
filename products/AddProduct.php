@@ -4,11 +4,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/AddProduct.css">
     <nav>
-        <div class='top-nav'>
-            <a href='../index.php'>Home</a>
-            <a href='../reviews/reviews.php'>Reviews</a>
-            <a href='products.php'>Products</a>
-            <a href='../login/login.php'>Login</a>
+        <div class="topnav">
+            <a class="active" href="../index.php">Home</a>
+            <a href="../reviews/reviews.php">Reviews</a>
+            <a href="../products/products.php">Products</a>
+        </div>
+        <div>
+            <a href="../login/login.php" style="float: right">Login</a>
         </div>
     </nav>
     <title>Add New Product</title>

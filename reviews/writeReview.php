@@ -18,11 +18,13 @@ $unreviewedProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/WriteReview.css">
         <nav>
-            <div class='top-nav'>
-                <a href='../index.php'>Home</a>
-                <a href='reviews.php'>Reviews</a>
-                <a href='../products/products.php'>Products</a>
-                <a href='../login/login.php'>Login</a>
+            <div class="topnav">
+                <a class="active" href="../index.php">Home</a>
+                <a href="../reviews/reviews.php">Reviews</a>
+                <a href="../products/products.php">Products</a>
+            </div>
+            <div>
+                <a href="../login/login.php" style="float: right">Login</a>
             </div>
         </nav>
         <title>Write a Review</title>
@@ -64,12 +66,6 @@ $unreviewedProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <input type="number" id="price" name="price" min="1" max="5" required>
                     </div>
                 </div>
-
-                <br>
-
-                <label for="photo">Upload a photo of the product:</label>
-                <br>
-                <input type="file" id="photo" name="photo" accept="image/*">
 
                 <br><br>
 

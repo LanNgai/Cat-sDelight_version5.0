@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Products Page</title>
-    <link rel="stylesheet" href="css/Products.css">
-</head>
-<body>
-<nav>
-    <div class="topnav">
-        <a href="../index.php">Home</a>
-        <a href="../reviews/reviews.php">Reviews</a>
-        <a class="active" href="products.php">Products</a>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Products Page</title>
+        <link rel="stylesheet" href="css/Products.css">
+    </head>
+    <body>
+    <nav>
+        <div class="topnav">
+            <a class="active" href="../index.php">Home</a>
+            <a href="../reviews/reviews.php">Reviews</a>
+            <a href="../products/products.php">Products</a>
+        </div>
+        <div>
+            <a href="../login/login.php" style="float: right">Login</a>
+        </div>
+    </nav>
+    <div class="add">
+      <a href='AddProduct.php'>Add a Product</a>
     </div>
-    <div>
-        <a href="../login/login.php" style="float: right">Login</a>
-    </div>
-</nav>
 <div>
     <?php
     require_once 'products.class.php';
 
-    // Fetch all products
     $products = Product::loadAllProducts();
 
     if (empty($products)) {
