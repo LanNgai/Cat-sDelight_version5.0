@@ -9,10 +9,10 @@ class Review
     private $priceRating;
     private $reviewText;
     private $dateCreated;
-    private $productName;
-    private $productType;
+    private $product;
 
-    public function __construct($reviewID, $productID, $adminLoginID, $qualityRating, $priceRating, $reviewText, $dateCreated, $productName = '', $productType = '') {
+    public function __construct($reviewID, $productID, $adminLoginID, $qualityRating, $priceRating, $reviewText, $dateCreated, $product)
+    {
         $this->reviewID = $reviewID;
         $this->productID = $productID;
         $this->adminLoginID = $adminLoginID;
@@ -20,13 +20,14 @@ class Review
         $this->priceRating = $priceRating;
         $this->reviewText = $reviewText;
         $this->dateCreated = $dateCreated;
-        $this->productName = $productName;
-        $this->productType = $productType;
+        $this->product = $product;
     }
+
     public function getReviewID($reviewID)
     {
         return $this->reviewID;
     }
+
     public function getProductID($productID)
     {
         return $this->productID;
@@ -56,11 +57,14 @@ class Review
     {
         return $this->dateCreated;
     }
-    public function getProductName() {
-        return $this->productName;
+
+    public function getProductName()
+    {
+        return $this->product->getProductName();
     }
 
-    public function getProductType() {
-        return $this->productType;
+    public function getProductType()
+    {
+        return $this->product->getProductType();
     }
 }
