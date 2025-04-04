@@ -53,19 +53,13 @@ $admin = new Admin($id, $result["Username"], $result["Email"], $result["Password
 </head>
 <body>
 <nav>
-    <div class="topnav">
-        <a href="../index.php">Home</a>
-        <a href="../reviews/reviews.php">Reviews</a>
-        <a href="../products/products.php">Products</a>
-    </div>
+    <?php require_once ('../templates/topnav.php') ?>
     <div class="accountnav">
         <button class="dropdownButton">Settings</button>
         <div class="dropdownContent">
             <a href="change/changeUsername.php">Change Username</a>
             <a href="change/changeEmail.php">Change Email</a>
             <a href="change/changePassword.php">Change Password</a>
-            <a href="change/changeBio.php">Edit Bio</a>
-            <a href="change/changePfp.php">Change Profile Picture</a>
             <a href="logout.php">Logout</a>
         </div>
     </div>

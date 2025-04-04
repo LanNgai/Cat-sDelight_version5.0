@@ -9,7 +9,6 @@ if (isset($_POST['submit'])) {
     $user_password = clean($_POST['password']);
 
     try {
-        session_start();
         $stmt = $conn->prepare("SELECT LoginID, Username, Password FROM login WHERE Username = ?");
         $stmt->execute([$user_username]);
         $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
