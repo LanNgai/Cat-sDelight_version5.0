@@ -1,4 +1,8 @@
 <?php
+
+
+session_start();
+require "../reviews/Comment.class.php";
 require "../reviews/Review.class.php";
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -21,7 +25,7 @@ if (!$review) {
         <title><?php echo $review->getProductName(); ?> - Review</title>
         <link rel="stylesheet" href="css/productReview.css">
     </head>
-    <body>
+<body>
     <nav>
         <div class="top-nav">
             <a href="../index.php">Home</a>
@@ -51,44 +55,83 @@ if (!$review) {
         </div>
     </div>
 
-<html>
-<form method="post">
-    <label for="comment">Write your comment here: </label>
-    <br>
-    <textarea id="comment" name="comment" rows="3" cols="50" required></textarea><br>
-    <input type="submit" value="Submit Comment">
-</form>
-</html>
-<?php
-$commentsFile = 'comments.txt';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $comment = $_POST['comment'];
-    file_put_contents($commentsFile, "$reviewId|$comment\n", FILE_APPEND);
-}
+    <html>
+    <form method="post">
+        <label for="comment">Write your comment here: </label>
+        <br>
+        <textarea id="comment" name="comment" rows="3" cols="50" required></textarea><br>
+        <input type="submit" value="Submit Comment">
+    </form>
+    </html>
 
-echo "<div class='comment-box'>";
-echo "<strong>Comments:</strong><br>";
-if (!file_exists($commentsFile) || filesize($commentsFile) === 0) {
-    echo "<p class='no-comments'>There are no comments yet. Be the first to comment!</p>";
-} else {
-    $comments = file($commentsFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    foreach ($comments as $commentLine) {
-        list($commentID, $comment) = explode('|', $commentLine);
-        if ($commentID === $reviewId) {
-            echo "<div class='individual'>
-                    <p>$comment</p>
-                  </div>";
+<?php
+// Handle comment submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'])) {
+    if (!isset($_SESSION['userLoginID'])) {
+        die("You must be logged in to post a comment.");
+    }
+
+    $commentText = trim($_POST['comment']);
+    $userLoginID = $_SESSION['userLoginID'];
+
+    if (!empty($commentText)) {
+        // Sanitize input
+        $commentText = htmlspecialchars($commentText, ENT_QUOTES, 'UTF-8');
+
+        // Create and save comment
+        try {
+            $comment = new Comment(
+                null, // commentID will be auto-generated
+                $commentText,
+                date('Y-m-d H:i:s'), // Current datetime
+                $reviewId,
+                $userLoginID,
+                0
+            );
+
+            Comment::save($comment);
+        } catch (Exception $e) {
+            die("Error saving comment: " . $e->getMessage());
         }
     }
 }
-echo "</div>";
-?>
-    <?php
-$commentsFile = 'comments.txt';
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['comment'])) {
-    $comment = trim($_POST['comment']);
-    // Basic sanitization (expand as needed)
-    $comment = htmlspecialchars($comment, ENT_QUOTES, 'UTF-8');
-    file_put_contents($commentsFile, "$reviewId|$comment\n", FILE_APPEND);
+
+// Display comment form only if logged in
+if (isset($_SESSION['userLoginID'])) : ?>
+    <html>
+    <form method="post">
+        <label for="comment">Write your comment here: </label>
+        <br>
+        <textarea id="comment" name="comment" rows="3" cols="50" required></textarea><br>
+        <input type="submit" value="Submit Comment">
+    </form>
+    </html>
+<?php else: ?>
+    <p>Please <a href="../login/login.php">login</a> to post a comment.</p>
+<?php endif; ?>
+
+<?php
+// Display comments
+echo "<div class='comment-box'>";
+echo "<strong>Comments:</strong><br>";
+
+try {
+    $comments = Comment::loadByReviewId($reviewId);
+
+    if (empty($comments)) {
+        echo "<p class='no-comments'>There are no comments yet. Be the first to comment!</p>";
+    } else {
+        foreach ($comments as $comment) {
+            echo "<div class='individual'>";
+            echo "<p><strong>" . htmlspecialchars($comment->getUserLoginID()) . "</strong> ";
+            echo "<small>" . htmlspecialchars($comment->getCommentDateAndTime()) . "</small></p>";
+            echo "<p>" . htmlspecialchars($comment->getCommentText()) . "</p>";
+            echo "</div>";
+        }
+    }
+} catch (Exception $e) {
+    echo "<p>Error loading comments: " . $e->getMessage() . "</p>";
 }
+
+echo "</div>";
 ?>
