@@ -37,9 +37,7 @@ if (!$review) {
 
     <div class="box">
         <div class="thumbnail">
-            <?php
-            echo "<img src='../data/images/placeholders/PlaceHolderProduct.png' alt='Product image'>";
-            ?>
+            <img src='../data/images/<?=$review->getProductImage();?>' alt='Product image'>
         </div>
 
         <div class="review">

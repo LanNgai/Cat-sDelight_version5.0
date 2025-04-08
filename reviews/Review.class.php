@@ -147,4 +147,9 @@ class Review
     {
         return $this->product->getProductType();
     }
+
+    public function getProductImage()
+    {
+        return $this->product->getProductImage();
+    }
 }

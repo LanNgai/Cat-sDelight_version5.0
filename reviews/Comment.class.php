@@ -49,6 +49,7 @@ class Comment
     }
 
 
+
     public static function save(Comment $comment) {
         require_once '../backend/DBconnect.php';
         $sql = "INSERT INTO comments 
