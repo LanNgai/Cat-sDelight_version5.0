@@ -1,19 +1,53 @@
 <?php
-
-
 session_start();
 require "../reviews/Comment.class.php";
 require "../reviews/Review.class.php";
+require_once "../products/products.class.php";
+require "../backend/DBconnect.php";
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     die("Invalid or missing review ID.");
 }
 
 $reviewId = (int)$_GET['id'];
-$review = Review::loadOneReview($reviewId);
 
-if (!$review) {
-    die("Review not found.");
+try {
+    $sql = "SELECT r.*, p.*
+            FROM reviews r JOIN products p 
+            ON r.ProductID = p.ProductID
+            WHERE r.ReviewID = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':id', $reviewId, PDO::PARAM_INT);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$row) {
+        die("Review not found.");
+    }
+
+    // Create Product and Review objects
+    $product = new Product(
+        $row['ProductName'],
+        $row['ProductType'],
+        $row['ProductDescription'],
+        $row['ProductManufacturer'],
+        $row['ProductImage'],
+        $row['ProductLink'],
+        $row['ProductID'],
+        $row['AdminLoginID']
+    );
+    $review = new Review(
+        $row['ReviewID'],
+        $row['ProductID'],
+        $row['AdminLoginID'],
+        $row['QualityRating'],
+        $row['PriceRating'],
+        $row['ReviewText'],
+        $row['DateAndTime'],
+        $product
+    );
+} catch (PDOException $e) {
+    die("Error loading review: " . $e->getMessage());
 }
 ?>
 
@@ -22,7 +56,7 @@ if (!$review) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><?php echo $review->getProductName(); ?> - Review</title>
+        <title><?php echo htmlspecialchars($review->getProductName()); ?> - Review</title>
         <link rel="stylesheet" href="css/productReview.css">
     </head>
 <body>
@@ -37,7 +71,7 @@ if (!$review) {
 
     <div class="box">
         <div class="thumbnail">
-            <img src='../data/images/<?=$review->getProductImage();?>' alt='Product image'>
+            <img src="../data/images/<?php echo $review->getProductImage(); ?>" alt="Product image">
         </div>
 
         <div class="review">

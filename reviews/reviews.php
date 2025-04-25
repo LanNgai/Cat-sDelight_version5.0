@@ -2,36 +2,114 @@
 require "../reviews/Review.class.php";
 require "../templates/header.php";
 require "../templates/footer.php";
+require "../backend/DBconnect.php";
 
-$reviews = Review::loadAllReviews();
+$search = '';
+$category = '';
+$whereClauses = [];
+$params = [];
+$reviews = [];
+
+try {
+    $sql = "SELECT r.ReviewID, r.ProductID, r.AdminLoginID, r.QualityRating, r.PriceRating, r.ReviewText, r.DateAndTime,
+                   p.ProductID AS ProdID, p.ProductName, p.ProductType, p.ProductDescription, p.ProductManufacturer, p.ProductImage, p.ProductLink
+            FROM reviews r
+            JOIN products p ON r.ProductID = p.ProductID";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $error) {
+    echo $sql . "<br>" . $error->getMessage();
+}
+
+//search and filter
+if (isset($_POST['submit'])) {
+    try {
+        //search
+        if (!empty($_POST['search'])) {
+            $search = trim($_POST['search']);
+            $whereClauses[] = "p.ProductName LIKE :search";
+            $params[':search'] = "%$search%";
+        }
+        //filter
+        if (!empty($_POST['category'])) {
+            $category = trim($_POST['category']);
+            $whereClauses[] = "p.ProductType = :category";
+            $params[':category'] = $category;
+        }
+        if (!empty($whereClauses)) {
+            $sql .= " WHERE " . implode(" AND ", $whereClauses);
+        }
+
+        $stmt = $conn->prepare($sql);
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value, is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+        }
+        $stmt->execute();
+        $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
+    }
+}
 ?>
 
-    <link rel="stylesheet" href="css/Reviews.css">
+<link rel="stylesheet" href="css/Reviews.css">
 
-    <nav>
-        <div class="topnav">
-            <a class="active" href="../index.php">Home</a>
-            <a href="../reviews/reviews.php">Reviews</a>
-            <a href="../products/products.php">Products</a>
-        </div>
-        <div>
-            <a href="../login/login.php" style="float: right">Login</a>
-        </div>
-    </nav>
-    <div class="add">
-        <a href='writeReview.php'>Write a Review</a>
+<nav>
+    <?php require "../templates/topnav.php"?>
+    <div>
+        <a href="../login/login.php" style="float: right">Login</a>
     </div>
+</nav>
+<div class="add">
+    <a href='writeReview.php'>Write a Review</a>
+</div>
 
-    <h1>Product Reviews</h1>
+<h1>Product Reviews</h1>
+<form method="post">
+    <label for="search">Search by Product Name</label>
+    <input type="text" id="search" name="search" value="<?php echo htmlspecialchars($search); ?>">
+
+    <label for="category">Category</label>
+    <select id="category" name="category">
+        <option value="">All Categories</option>
+        <option value="Toy">Toy</option>
+        <option value="Food">Food</option>
+        <option value="Litter">Litter</option>
+        <option value="Misc">Miscellaneous</option>
+    </select>
+
+    <input type="submit" name="submit" value="View Results">
+</form>
 
 <?php
 if (empty($reviews)) {
     echo "There are no reviews yet.";
 } else {
-    foreach ($reviews as $review) {
+    foreach ($reviews as $row) {
+        $product = new Product(
+            $row['ProductName'],
+            $row['ProductType'],
+            $row['ProductDescription'],
+            $row['ProductManufacturer'],
+            $row['ProductImage'],
+            $row['ProductLink'],
+            $row['ProdID'],
+            $row['AdminLoginID']
+        );
+        $review = new Review(
+            $row['ReviewID'],
+            $row['ProductID'],
+            $row['AdminLoginID'],
+            $row['QualityRating'],
+            $row['PriceRating'],
+            $row['ReviewText'],
+            $row['DateAndTime'],
+            $product
+        );
         echo "<div class='box'>";
         echo "<div class='thumbnail'>";
-        echo "<img src='../data/images/" . $review->getProductImage() . "' alt='Product image'>";
+        echo "<img src='../data/images/" . $review->getProductImage(). "' alt='Product image'>";
         echo "</div>";
 
         $averageRating = ($review->getQtyRating() + $review->getPriceRating()) / 2;

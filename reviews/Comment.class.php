@@ -77,7 +77,7 @@ class Comment
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
             //$row array(6) { ["CommentID"]=> int(1) ["ReviewID"]=> int(2) ["UserLoginID"]=> int(3) ["CommentText"]=> string(20) "That seems so handy!"
-            // ["Likes"]=> int(0) ["DateAndTime"]=> NULL }
+            //["Likes"]=> int(0) ["DateAndTime"]=> GetDate() }
             $comments[] = new Comment(
                 $row['CommentID'],
                 $row['CommentText'],
