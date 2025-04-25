@@ -11,10 +11,9 @@ $params = [];
 $reviews = [];
 
 try {
-    $sql = "SELECT r.ReviewID, r.ProductID, r.AdminLoginID, r.QualityRating, r.PriceRating, r.ReviewText, r.DateAndTime,
-                   p.ProductID AS ProdID, p.ProductName, p.ProductType, p.ProductDescription, p.ProductManufacturer, p.ProductImage, p.ProductLink
-            FROM reviews r
-            JOIN products p ON r.ProductID = p.ProductID";
+    $sql = "SELECT r.*, p.*
+            FROM reviews r JOIN products p 
+            ON r.ProductID = p.ProductID";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -94,7 +93,7 @@ if (empty($reviews)) {
             $row['ProductManufacturer'],
             $row['ProductImage'],
             $row['ProductLink'],
-            $row['ProdID'],
+            $row['ProductID'],
             $row['AdminLoginID']
         );
         $review = new Review(
@@ -109,7 +108,8 @@ if (empty($reviews)) {
         );
         echo "<div class='box'>";
         echo "<div class='thumbnail'>";
-        echo "<img src='../data/images/" . $review->getProductImage(). "' alt='Product image'>";
+        $imagePath = $product->getProductImage() ? '../data/images/' . $product->getProductImage() : '../data/images/placeholders/PlaceHolderProduct.png';
+        echo "<img src='" . $imagePath . "' alt='Product image'>";
         echo "</div>";
 
         $averageRating = ($review->getQtyRating() + $review->getPriceRating()) / 2;

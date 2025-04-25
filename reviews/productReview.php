@@ -24,8 +24,6 @@ try {
     if (!$row) {
         die("Review not found.");
     }
-
-    // Create Product and Review objects
     $product = new Product(
         $row['ProductName'],
         $row['ProductType'],
@@ -61,11 +59,9 @@ try {
     </head>
 <body>
     <nav>
-        <div class="top-nav">
-            <a href="../index.php">Home</a>
-            <a href="reviews.php">Reviews</a>
-            <a href="../products/products.php">Products</a>
-            <a href="../login/login.php">Login</a>
+        <?php require "../templates/topnav.php"?>
+        <div>
+            <a href="../login/login.php" style="float: right">Login</a>
         </div>
     </nav>
 
