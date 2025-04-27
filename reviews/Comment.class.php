@@ -51,18 +51,20 @@ class Comment
 
 
     public static function save(Comment $comment) {
-        require_once '../backend/DBconnect.php';
+        require'../backend/DBconnect.php';
+
         $sql = "INSERT INTO comments 
-            (CommentText, DateAndTime, ReviewID, UserLoginID, Likes)
-            VALUES (?, ?, ?, ?, ?)";
+            (CommentID, ReviewID,  UserLoginID, CommentText,  Likes, DateAndTime)
+            VALUES (?, ?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($sql);
         $stmt->execute([
-            $comment->getCommentText(),
-            $comment->getCommentDateAndTime(),
+            $comment->getCommentID(),
             $comment->getReviewID(),
             $comment->getUserLoginID(),
-            $comment->getLikes()
+            $comment->getCommentText(),
+            $comment->getLikes(),
+            $comment->getCommentDateAndTime()
         ]);
     }
 

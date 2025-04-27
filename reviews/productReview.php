@@ -131,8 +131,28 @@ try {
         echo "<p class='no-comments'>There are no comments yet. Be the first to comment!</p>";
     } else {
         foreach ($comments as $comment) {
+            $userLoginID = $comment->getUserLoginID();
+
+            try {
+                require "../backend/DBconnect.php";
+
+                $sql = "SELECT login.Username
+                            FROM login
+                            JOIN user ON login.LoginID = user.UserLoginID
+                            JOIN profile ON user.UserLoginID = profile.UserLoginID
+                            WHERE login.LoginID = :id";
+
+                $stmt = $conn->prepare($sql);
+                $stmt->bindValue(':id', $userLoginID, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $userName = $stmt->fetch(PDO::FETCH_ASSOC);
+            }catch (PDOException $e){
+                echo $e->getMessage();
+            }
+
             echo "<div class='individual'>";
-            echo "<p><strong>" . htmlspecialchars($comment->getUserLoginID()) . "</strong> ";
+            echo "<p><strong>" . $userName['Username'] . "</strong> ";
             echo "<small>" . htmlspecialchars($comment->getCommentDateAndTime()) . "</small></p>";
             echo "<p>" . htmlspecialchars($comment->getCommentText()) . "</p>";
             echo "</div>";
