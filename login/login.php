@@ -4,16 +4,14 @@
 </head>
 <body>
 <nav>
-    <div class="topnav">
-        <a href="../index.php">Home</a>
-        <a href="../reviews/reviews.php">Reviews</a>
-        <a href="../products/products.php">Products</a>
-    </div>
+    <?php require "../templates/topnav.php"?>
 </nav>
-    <div class="login-container">
+    <?php
+        if(!isset($_SESSION['Action'])){?>
+            <div class="login-container">
         <h3>Login</h3>
         <form class="login-form" method="post" action="login-validation.php">
-            Your username:
+                Your username:
             <br>
             <input type="text" name="username" required>
             <br><br>
@@ -32,6 +30,11 @@
             <a href="../index.php">Go to Home Page</a>
         </div>
     </div>
+        <?php } else{?>
+        <div class="login-container">
+            <h3>You are already logged in!</h3>
+        </div>         <?php } ?>
+
 </body>
 </html>
 

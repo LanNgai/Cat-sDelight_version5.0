@@ -4,9 +4,8 @@
 </head>
 <body>
 <?php
-    $_SESSION['Active'] = !$_SESSION['Active'];
+    $_SESSION['Active'] = false;
     echo "<h1>You have logged out of your account</h1>";
-    echo $_SESSION['Active'];
 ?>
 <h2>Go back to the homepage: <a href="../index.php">Click here!</a></h2>
 </body>
