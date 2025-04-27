@@ -16,7 +16,7 @@
     <title>Add New Product</title>
 </head>
 <body>
-    <form method="post" action="PostProduct.php" enctype="multipart/form-data" class="product-form">
+    <form method="post" action="postProduct.php" enctype="multipart/form-data" class="product-form">
         <div class="review">
             <h1 id="title">Add New Product</h1>
 

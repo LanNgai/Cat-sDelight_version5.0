@@ -14,7 +14,7 @@
         </div>
     </nav>
     <div class="add">
-        <a href="AddProduct.php">Add a Product</a>
+        <a href="addProduct.php">Add a Product</a>
     </div>
 
     <h1>Products</h1>
@@ -114,8 +114,8 @@
                             <strong>Product Name:</strong> <?php echo $product->getProductName(); ?><br>
                             <strong>Manufacturer:</strong> <?php echo $product->getProductManufacturer(); ?><br>
                             <a href='productDetail.php?id=<?php echo $product->getProductID(); ?>' class='view-button'>View Details</a>
-                            <a href='productDetail.php?id=<?php echo $product->getProductID(); ?>' class='view-button'>Update</a>
-                            <a href='DeleteProduct.php?id=<?php echo htmlspecialchars($product->getProductID()); ?>' class='view-button' id="delete">Delete</a>
+                            <a href='updateProduct.php?id=<?php echo htmlspecialchars($product->getProductID()); ?>' class='view-button'>Update</a>
+                            <a href='deleteProduct.php?id=<?php echo htmlspecialchars($product->getProductID()); ?>' class='view-button' id="delete">Delete</a>
                         </div>
                     </div>
                     <?php
