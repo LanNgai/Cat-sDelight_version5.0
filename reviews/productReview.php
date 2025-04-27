@@ -67,7 +67,10 @@ try {
 
     <div class="box">
         <div class="thumbnail">
-            <img src="../data/images/<?php echo $review->getProductImage(); ?>" alt="Product image">
+            <?php
+            $imagePath = $product->getProductImage() ? '../data/images/' . $product->getProductImage() : '../data/images/placeholders/PlaceHolderProduct.png';
+            echo "<img src='" . $imagePath . "' alt='Product Image'>";
+            ?>
         </div>
 
         <div class="review">

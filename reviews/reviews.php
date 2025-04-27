@@ -120,9 +120,9 @@ if (empty($reviews)) {
         echo "<strong>Quality Rating:</strong> " . $review->getQtyRating() . "/5<br>";
         echo "<strong>Price Rating:</strong> " . $review->getPriceRating() . "/5<br>";
         echo "<strong>Overall Rating:</strong> " . number_format($averageRating, 1) . "/5<br>";
-        echo "<a href='productReview.php?id=" . $review->getReviewID() . "'>Read Full Review</a>";
-        echo "<a href='productReview.php?id=" . $review->getReviewID() . "'>Update</a>";
-        echo "<a href='deleteReview.php?id=" . $review->getReviewID() . "' id='delete'>Delete</a>";
+        echo "<a href='productReview.php?id=" . $review->getReviewID() . "'class='view-button'>Read Full Review</a>";
+        echo "<a href='productReview.php?id=" . $review->getReviewID() . "'class='view-button'>Update</a>";
+        echo "<a href='deleteReview.php?id=" . $review->getReviewID() . "'class='view-button' id='delete'>Delete</a>";
         echo "</div>";
         echo "</div>";
     }

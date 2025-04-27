@@ -40,6 +40,7 @@ h1 {
     margin: 20px 0;
     color: #333;
 }
+
 .box {
     display: flex;
     background-color: #fff;
@@ -63,13 +64,15 @@ h1 {
     border-radius: 10px;
 }
 
-.review strong {
+.review {
+    flex: 1;
     color: #333;
 }
 
 .review a {
     display: inline-block;
     margin-top: 10px;
+    margin-right: 6px;
     padding: 10px 15px;
     background-color: #b7d1daff;
     color: #333;
