@@ -10,7 +10,7 @@
     <body>
         <nav>
             <div class="topnav">
-                <a class="active" href="index.php">Home</a>
+                <a href="index.php">Home</a>
                 <a href="reviews/reviews.php">Reviews</a>
                 <a href="products/products.php">Products</a>
             </div>
