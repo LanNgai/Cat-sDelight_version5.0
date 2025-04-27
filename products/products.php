@@ -8,11 +8,7 @@
 </head>
 <body>
     <nav>
-        <div class="topnav">
-            <a class="active" href="../index.php">Home</a>
-            <a href="../reviews/reviews.php">Reviews</a>
-            <a href="../products/products.php">Products</a>
-        </div>
+        <?php require "../templates/topnav.php"?>
         <div>
             <a href="../login/login.php" style="float: right">Login</a>
         </div>
@@ -22,7 +18,7 @@
     </div>
 
     <h1>Products</h1>
-    <form method="post">
+    <form method="post" class="search">
         <label for="search">Search by Product Name</label>
         <input type="text" id="search" name="search" value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
 
@@ -49,7 +45,6 @@
             $params = [];
             $products = [];
 
-            // Fetch all products by default
             try {
                 $sql = "SELECT *
                         FROM products";
@@ -119,6 +114,8 @@
                             <strong>Product Name:</strong> <?php echo $product->getProductName(); ?><br>
                             <strong>Manufacturer:</strong> <?php echo $product->getProductManufacturer(); ?><br>
                             <a href='productDetail.php?id=<?php echo $product->getProductID(); ?>' class='view-button'>View Details</a>
+                            <a href='productDetail.php?id=<?php echo $product->getProductID(); ?>' class='view-button'>Update</a>
+                            <a href='DeleteProduct.php?id=<?php echo htmlspecialchars($product->getProductID()); ?>' class='view-button' id="delete">Delete</a>
                         </div>
                     </div>
                     <?php

@@ -41,17 +41,6 @@ h1 {
     color: #333;
 }
 
-.thumbnail {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.thumbnail img {
-    min-width: 70%;
-    max-height: 300px;
-    border-radius: 10px;
-}
-
 .box {
     display: flex;
     background-color: #fff;
@@ -62,6 +51,17 @@ h1 {
     width: 40%;
     max-width: 1000px;
     align-items: center;
+}
+
+.thumbnail {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.thumbnail img {
+    min-width: 70%;
+    max-height: 300px;
+    border-radius: 10px;
 }
 
 .product strong {
@@ -107,4 +107,11 @@ h1 {
 }
 .add a:hover {
     background-color: #038a5a;
+}
+.search{
+    justify-self: center;
+}
+.product a#delete:hover {
+    background-color: #ac0606;
+    color: #fff;
 }

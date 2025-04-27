@@ -61,11 +61,11 @@ if (isset($_POST['submit'])) {
     </div>
 </nav>
 <div class="add">
-    <a href='writeReview.php'>Write a Review</a>
+    <a href='WriteReview.php'>Write a Review</a>
 </div>
 
 <h1>Product Reviews</h1>
-<form method="post">
+<form method="post" class="search">
     <label for="search">Search by Product Name</label>
     <input type="text" id="search" name="search" value="<?php echo htmlspecialchars($search); ?>">
 
@@ -120,7 +120,9 @@ if (empty($reviews)) {
         echo "<strong>Quality Rating:</strong> " . $review->getQtyRating() . "/5<br>";
         echo "<strong>Price Rating:</strong> " . $review->getPriceRating() . "/5<br>";
         echo "<strong>Overall Rating:</strong> " . number_format($averageRating, 1) . "/5<br>";
-        echo "<a href='productReview.php?id=" . $review->getReviewID() . "'>Read Full Review</a><br><br>";
+        echo "<a href='productReview.php?id=" . $review->getReviewID() . "'>Read Full Review</a>";
+        echo "<a href='productReview.php?id=" . $review->getReviewID() . "'>Update</a>";
+        echo "<a href='deleteReview.php?id=" . $review->getReviewID() . "' id='delete'>Delete</a>";
         echo "</div>";
         echo "</div>";
     }

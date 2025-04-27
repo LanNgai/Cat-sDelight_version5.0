@@ -49,35 +49,31 @@ try {
     <link rel="stylesheet" href="css/productDetail.css">
 </head>
 <body>
-<nav>
-    <div class="topnav">
-        <a href="../index.php">Home</a>
-        <a href="../reviews/reviews.php">Reviews</a>
-        <a class="active" href="../products/products.php">Products</a>
-    </div>
-    <div>
-        <a href="../login/login.php" style="float: right">Login</a>
-    </div>
-</nav>
+    <nav>
+        <?php require "../templates/topnav.php"?>
+        <div>
+            <a href="../login/login.php" style="float: right">Login</a>
+        </div>
+    </nav>
 
-<div class="box">
-    <div class="thumbnail">
-        <?php
-        $imagePath = $product->getProductImage() ? '../data/images/' . $product->getProductImage() : '../data/images/placeholders/PlaceHolderProduct.png';
-        echo "<img src='" . $imagePath . "' alt='Product Image'>";
-        ?>
-    </div>
+    <div class="box">
+        <div class="thumbnail">
+            <?php
+            $imagePath = $product->getProductImage() ? '../data/images/' . $product->getProductImage() : '../data/images/placeholders/PlaceHolderProduct.png';
+            echo "<img src='" . $imagePath . "' alt='Product Image'>";
+            ?>
+        </div>
 
-    <div class="product-info">
-        <h2><?php echo $product->getProductName(); ?></h2>
-        <p><strong>Category:</strong> <?php echo $product->getProductType(); ?></p>
-        <p><strong>Description:</strong> <?php echo $product->getProductDescription(); ?></p>
-        <p><strong>Manufacturer:</strong> <?php echo $product->getProductManufacturer(); ?></p>
-        <?php if ($product->getProductLink()): ?>
-            <p><strong>More Info:</strong> <a href="<?php echo $product->getProductLink(); ?>" target="_blank">Visit Manufacturer Site</a></p>
-        <?php endif; ?>
-        <p><a href="products.php" id="back">Back to All Products</a></p>
+        <div class="product-info">
+            <h2><?php echo $product->getProductName(); ?></h2>
+            <p><strong>Category:</strong> <?php echo $product->getProductType(); ?></p>
+            <p><strong>Description:</strong> <?php echo $product->getProductDescription(); ?></p>
+            <p><strong>Manufacturer:</strong> <?php echo $product->getProductManufacturer(); ?></p>
+            <?php if ($product->getProductLink()): ?>
+                <p><strong>More Info:</strong> <a href="<?php echo $product->getProductLink(); ?>" target="_blank">Visit Manufacturer Site</a></p>
+            <?php endif; ?>
+            <p><a href="products.php" id="back">Back to All Products</a></p>
+        </div>
     </div>
-</div>
 </body>
 </html>
