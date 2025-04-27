@@ -1,2 +1,0 @@
-Toy|Test Product|2|5|3.5|Testing testing|https://www.youtube.com/watch?v=z6J_h1pGg3s
-Food|Yum Yum Chicken|4|3|3.5|Food food food food food food food|https://www.petstop.ie/collections/cat-food?srsltid=AfmBOor-w44qZtOLwqAydY6j0ICq5LHB7cbaRKzH2WzOaJgtMyiEtq8y

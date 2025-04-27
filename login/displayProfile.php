@@ -70,6 +70,7 @@
             </div>
         </div>
 
+        <?php ?>
         <div class="profile-comments-container">
             <?php if (!empty($comments)): ?>
                 <?php foreach ($comments as $comment): ?>

@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['submit'])) {
-
+    require "../templates/header.php";
     include "../templates/footer.php";
     require "../backend/DBconnect.php";
 
@@ -23,16 +23,16 @@ if (isset($_POST['submit'])) {
         // TODO: Remember to put hashed values for the passwords stored in the DB!!!
         if (!empty($user_data) && $user_password == $user_data['Password']) {
             if($user_data['LoginID'] == $user_ID['UserLoginID']) {
-                $_SESSION['login'] == true;
+                $_SESSION['Active'] = true;
+                $_SESSION['userLoginID'] = $user_data['LoginID'];
                 header("Location: displayProfile.php?id=" . $user_data['LoginID']);
                 exit();
             } else if ($user_data['LoginID'] == $admin_ID['AdminLoginID']) {
-                $_SESSION['login'] == true;
+                $_SESSION['Active'] = true;
                 header("Location: adminPage.php?id=" . $user_data['LoginID']);
                 exit();
             }
         } else {
-            var_dump($user_data['Password']);
             echo "Invalid password.";
         }
     } catch (PDOException $e) {

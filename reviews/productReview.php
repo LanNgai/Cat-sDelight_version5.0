@@ -1,5 +1,5 @@
 <?php
-session_start();
+require "../templates/header.php";
 require "../reviews/Comment.class.php";
 require "../reviews/Review.class.php";
 require_once "../products/products.class.php";
@@ -86,19 +86,11 @@ try {
         </div>
     </div>
 
-    <html>
-    <form method="post">
-        <label for="comment">Write your comment here: </label>
-        <br>
-        <textarea id="comment" name="comment" rows="3" cols="50" required></textarea><br>
-        <input type="submit" value="Submit Comment">
-    </form>
-    </html>
-
 <?php
+
 // Handle comment submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'])) {
-    if (!isset($_SESSION['userLoginID'])) {
+    if (!isset($_SESSION['Active'])) {
         die("You must be logged in to post a comment.");
     }
 
@@ -127,21 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'])) {
     }
 }
 
-// Display comment form only if logged in
-if (isset($_SESSION['userLoginID'])) : ?>
-    <html>
-    <form method="post">
-        <label for="comment">Write your comment here: </label>
-        <br>
-        <textarea id="comment" name="comment" rows="3" cols="50" required></textarea><br>
-        <input type="submit" value="Submit Comment">
-    </form>
-    </html>
-<?php else: ?>
-    <p>Please <a href="../login/login.php">login</a> to post a comment.</p>
-<?php endif; ?>
 
-<?php
 // Display comments
 echo "<div class='comment-box'>";
 echo "<strong>Comments:</strong><br>";
@@ -165,4 +143,18 @@ try {
 }
 
 echo "</div>";
-?>
+
+// Display comment form only if logged in
+if (isset($_SESSION['Active'])) { ?>
+    <html>
+    <form method="post">
+        <label for="comment">Write your comment here: </label>
+        <br>
+        <textarea id="comment" name="comment" rows="3" cols="50" required></textarea><br>
+        <input type="submit" value="Submit Comment">
+    </form>
+    </html>
+<?php } else {?>
+    <p>Please <a href="../login/login.php">login</a> to post a comment.</p>
+<?php } ?>
+

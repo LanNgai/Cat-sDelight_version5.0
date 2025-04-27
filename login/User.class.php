@@ -3,7 +3,7 @@
 class User extends Login
 {
     private $profile;
- public function __construct($loginID, $username, $password, $email, $profile)
+ public function __construct($loginID, $username, $email, $password, $profile)
  {
      parent::__construct($loginID, $username, $email, $password);
      $this->profile = $profile;
