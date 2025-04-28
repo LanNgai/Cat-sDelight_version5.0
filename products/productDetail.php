@@ -10,7 +10,6 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $productID = (int)$_GET['id'];
 
-// Fetch the product directly from the database
 try {
     $sql = "SELECT ProductID, ProductName, ProductType, ProductDescription, ProductManufacturer, ProductImage, ProductLink, AdminLoginID
             FROM products
@@ -24,7 +23,6 @@ try {
         die("Product not found.");
     }
 
-    // Create Product object
     $product = new Product(
         $row['ProductName'],
         $row['ProductType'],

@@ -19,12 +19,7 @@ $unreviewedProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <link rel="stylesheet" href="css/WriteReview.css">
         <nav>
             <div class="topnav">
-                <a class="active" href="../index.php">Home</a>
-                <a href="../reviews/reviews.php">Reviews</a>
-                <a href="../products/products.php">Products</a>
-            </div>
-            <div>
-                <a href="../login/login.php" style="float: right">Login</a>
+                <?php require "../templates/topnav.php"?>
             </div>
         </nav>
         <title>Write a Review</title>

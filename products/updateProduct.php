@@ -95,9 +95,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
 <nav>
     <?php require "../templates/topnav.php"; ?>
-    <div>
-        <a href="../login/login.php" style="float: right">Login</a>
-    </div>
 </nav>
 
 <?php
