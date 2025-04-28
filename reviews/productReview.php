@@ -90,7 +90,7 @@ try {
 
 // Handle comment submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'])) {
-    if (!isset($_SESSION['Active'])) {
+    if (!$_SESSION['Active']) {
         die("You must be logged in to post a comment.");
     }
 
@@ -165,7 +165,7 @@ try {
 echo "</div>";
 
 // Display comment form only if logged in
-if (isset($_SESSION['Active'])) { ?>
+if ($_SESSION['Active']) { ?>
     <html>
     <form method="post">
         <label for="comment">Write your comment here: </label>
