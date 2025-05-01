@@ -9,13 +9,12 @@
 <body>
     <nav>
         <?php require "../templates/topnav.php"?>
-        <div>
-            <a href="../login/login.php" style="float: right">Login</a>
-        </div>
     </nav>
+    <?php if ($_SESSION['IsAdmin']) { ?>
     <div class="add">
         <a href="addProduct.php">Add a Product</a>
     </div>
+    <?php } ?>
 
     <h1>Products</h1>
     <form method="post" class="search">

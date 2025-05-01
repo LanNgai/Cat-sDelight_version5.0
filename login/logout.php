@@ -1,4 +1,4 @@
-<?php require "../templates/header.php"?>
+<?php require "../templates/header_sessions.php" ?>
 <title> Logout </title>
 <link rel="stylesheet" href="../index.css">
 </head>

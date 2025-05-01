@@ -1,4 +1,4 @@
-<?php require "../templates/header.php"?>
+<?php require "../templates/header_sessions.php" ?>
 <title>Registration Page</title>
     <link rel="stylesheet" href="registration.css">
 </head>

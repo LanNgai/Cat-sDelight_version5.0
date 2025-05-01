@@ -1,5 +1,5 @@
 <?php
-require "../templates/header.php";
+require "../templates/header_sessions.php";
 
 echo "You are in admin mode!";
 ?>

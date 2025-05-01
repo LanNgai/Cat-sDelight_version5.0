@@ -89,4 +89,25 @@ class Comment
         }
         return $comments;
     }
+
+    public static function loadByUserId($UserId) {
+        require'../backend/DBconnect.php';
+        $sql = "SELECT * FROM comments WHERE UserLoginID = ? ORDER BY DateAndTime DESC";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$UserId]);
+
+        $comments = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+            $comments[] = new Comment(
+                $row['CommentID'],
+                $row['CommentText'],
+                $row['DateAndTime'],
+                $row['ReviewID'],
+                $row['UserLoginID'],
+                $row['Likes']
+            );
+        }
+        return $comments;
+    }
 }

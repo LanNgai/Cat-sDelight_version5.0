@@ -1,4 +1,4 @@
-<?php require "../templates/header.php"?>
+<?php require "../templates/header.php" ?>
 
 <?php
     require "../backend/config.php";
@@ -8,7 +8,9 @@
     require "Login.class.php";
     require "User.class.php";
 
-    $id = clean($_GET["id"]);
+    session_start();
+    $id = $_SESSION['userLoginID'];
+    session_abort();
     try {
         require "../backend/DBconnect.php";
 
@@ -41,7 +43,11 @@
 </head>
 <body>
 <nav>
-    <?php require_once ('../templates/topnav.php') ?>
+    <div class="topnav">
+        <a href="../index.php">Home</a>
+        <a href="../reviews/reviews.php">Reviews</a>
+        <a href="../products/products.php">Products</a>
+    </div>
     <div class="accountnav">
         <button class="dropdownButton">Settings</button>
         <div class="dropdownContent">
@@ -70,20 +76,46 @@
             </div>
         </div>
 
-        <?php ?>
         <div class="profile-comments-container">
-            <?php if (!empty($comments)): ?>
-                <?php foreach ($comments as $comment): ?>
-                    <div class="comment">
-                        <p><?php echo htmlspecialchars($comment['comment']); ?></p>
-                        <p class="comment-date">
-                            Posted on: <?php echo date("F j, Y, g:i a", strtotime($comment['created_at'])); ?>
-                        </p>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p id="comment-error">No comments found.</p>
-            <?php endif; ?>
+        <?php
+        require "../reviews/Comment.class.php";
+            try {
+            $comments = Comment::loadByUserId($id);
+
+            if (empty($comments)) {
+            echo "<p class='no-comments'>You have not made any comments yet.</p>";
+            } else {
+            foreach ($comments as $comment) {
+            $userLoginID = $comment->getUserLoginID();
+
+            try {
+            require "../backend/DBconnect.php";
+
+            $sql = "SELECT login.Username
+            FROM login
+            JOIN user ON login.LoginID = user.UserLoginID
+            JOIN profile ON user.UserLoginID = profile.UserLoginID
+            WHERE login.LoginID = :id";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':id', $userLoginID, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $userName = $stmt->fetch(PDO::FETCH_ASSOC);
+            }catch (PDOException $e){
+            echo $e->getMessage();
+            }
+
+            ?> <div class='individual'> <?php
+                echo "<p><strong>" . $userName['Username'] . "</strong> ";
+                    echo "<small>" . htmlspecialchars($comment->getCommentDateAndTime()) . "</small></p>";
+                echo "<p>" . htmlspecialchars($comment->getCommentText()) . "</p>";
+                ?></div> <?php
+            }
+            }
+            } catch (Exception $e) {
+            echo "<p>Error loading comments: " . $e->getMessage() . "</p>";
+            }  ?>
         </div>
     </div>
 </body>

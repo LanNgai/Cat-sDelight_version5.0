@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<?php require "templates/header.php" ?>
         <title> Cat's Delight </title>
         <link rel="stylesheet" href="index.css">
     </head>
@@ -13,6 +9,13 @@
                 <a href="index.php">Home</a>
                 <a href="reviews/reviews.php">Reviews</a>
                 <a href="products/products.php">Products</a>
+                <?php
+                session_start();
+                if ($_SESSION['Active'] && !$_SESSION['IsAdmin']) { ?>
+                    <a href="login/displayProfile.php">Profile</a>
+
+                <?php }
+                ?>
             </div>
             <div>
                 <a href="login/login.php" style="float: right">Login</a>

@@ -56,14 +56,12 @@ if (isset($_POST['submit'])) {
 
 <nav>
     <?php require "../templates/topnav.php"?>
-    <div>
-        <a href="../login/login.php" style="float: right">Login</a>
-    </div>
 </nav>
+<?php if ($_SESSION['IsAdmin']) { ?>
 <div class="add">
     <a href='writeReview.php'>Write a Review</a>
 </div>
-
+<?php } ?>
 <h1>Product Reviews</h1>
 <form method="post" class="search">
     <label for="search">Search by Product Name</label>

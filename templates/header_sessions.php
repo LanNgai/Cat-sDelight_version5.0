@@ -1,3 +1,9 @@
+<?php
+session_start();
+    if (!$_SESSION['Active']) {
+        $_SESSION['IsAdmin'] = false;
+    }
+?>
 
 <!DOCTYPE html>
 <html>

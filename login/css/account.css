@@ -51,23 +51,15 @@ nav {
     align-items: center;
 }
 
-/* Style the links inside the navigation bar */
 nav a {
     color: white;
     text-decoration: none;
     margin: 0 10px;
 }
 
-/* Change the color of links on hover */
 nav a:hover {
     background-color: lightblue;
     color: black;
-}
-
-/* Add a color to the active/current link */
-nav a.active {
-    background-color: lightblue;
-    color: white;
 }
 
 body {
@@ -118,7 +110,6 @@ body {
     flex-wrap: wrap;
 }
 .profile-comments-container {
-    margin-top: 20px;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -126,6 +117,18 @@ body {
     text-align: center;
     width: 60%;
     margin: 100px auto;
+}
+
+.profile-comments-container .individual {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-left: 4px solid #04AA6D;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.profile-comments-container .individual p {
+    margin: 0;
 }
 .comment {
     background-color: #f9f9f9;
@@ -143,3 +146,4 @@ body {
 #comment-error{
     padding-top: 500px;
 }
+

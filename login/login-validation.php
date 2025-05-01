@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['submit'])) {
-    require "../templates/header.php";
+    require "../templates/header_sessions.php";
     include "../templates/footer.php";
     require "../backend/DBconnect.php";
 
@@ -24,11 +24,13 @@ if (isset($_POST['submit'])) {
         if (!empty($user_data) && $user_password == $user_data['Password']) {
             if($user_data['LoginID'] == $user_ID['UserLoginID']) {
                 $_SESSION['Active'] = true;
+                $_SESSION['IsAdmin'] = false;
                 $_SESSION['userLoginID'] = $user_data['LoginID'];
                 header("Location: displayProfile.php?id=" . $user_data['LoginID']);
                 exit();
             } else if ($user_data['LoginID'] == $admin_ID['AdminLoginID']) {
                 $_SESSION['Active'] = true;
+                $_SESSION['IsAdmin'] = true;
                 header("Location: adminPage.php?id=" . $user_data['LoginID']);
                 exit();
             }
