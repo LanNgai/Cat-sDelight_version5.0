@@ -104,23 +104,44 @@ if (empty($reviews)) {
             $row['DateAndTime'],
             $product
         );
-        echo "<div class='box'>";
-        echo "<div class='thumbnail'>";
-        $imagePath = $product->getProductImage() ? '../data/images/' . $product->getProductImage() : '../data/images/placeholders/PlaceHolderProduct.png';
-        echo "<img src='" . $imagePath . "' alt='Product image'>";
-        echo "</div>";
 
-        $averageRating = ($review->getQtyRating() + $review->getPriceRating()) / 2;
 
-        echo "<div class='review'>";
-        echo "<strong>Category:</strong> " . $review->getProductType() . "<br>";
-        echo "<strong>Product Name:</strong> " . $review->getProductName() . "<br>";
-        echo "<strong>Quality Rating:</strong> " . $review->getQtyRating() . "/5<br>";
-        echo "<strong>Price Rating:</strong> " . $review->getPriceRating() . "/5<br>";
-        echo "<strong>Overall Rating:</strong> " . number_format($averageRating, 1) . "/5<br>";
-        echo "<a href='productReview.php?id=" . $review->getReviewID() . "'class='view-button'>Read Full Review</a>";
-        echo "<a href='updateReview.php?id=" . $review->getReviewID().  "' class='view-button'>Update</a>";
-        echo "<a href='deleteReview.php?id=" . $review->getReviewID() . "'class='view-button' id='delete'>Delete</a>";
+        if ($_SESSION['IsAdmin'] && $_SESSION['Active']) {
+            echo "<div class='box'>";
+            echo "<div class='thumbnail'>";
+            $imagePath = $product->getProductImage() ? '../data/images/' . $product->getProductImage() : '../data/images/placeholders/PlaceHolderProduct.png';
+            echo "<img src='" . $imagePath . "' alt='Product image'>";
+            echo "</div>";
+
+            $averageRating = ($review->getQtyRating() + $review->getPriceRating()) / 2;
+
+            echo "<div class='review'>";
+            echo "<strong>Category:</strong> " . $review->getProductType() . "<br>";
+            echo "<strong>Product Name:</strong> " . $review->getProductName() . "<br>";
+            echo "<strong>Quality Rating:</strong> " . $review->getQtyRating() . "/5<br>";
+            echo "<strong>Price Rating:</strong> " . $review->getPriceRating() . "/5<br>";
+            echo "<strong>Overall Rating:</strong> " . number_format($averageRating, 1) . "/5<br>";
+            echo "<a href='productReview.php?id=" . $review->getReviewID() . "'class='view-button'>Read Full Review</a>";
+            echo "<a href='updateReview.php?id=" . $review->getReviewID().  "' class='view-button'>Update</a>";
+            echo "<a href='deleteReview.php?id=" . $review->getReviewID() . "'class='view-button' id='delete'>Delete</a>";
+        } else {
+            echo "<div class='box'>";
+            echo "<div class='thumbnail'>";
+            $imagePath = $product->getProductImage() ? '../data/images/' . $product->getProductImage() : '../data/images/placeholders/PlaceHolderProduct.png';
+            echo "<img src='" . $imagePath . "' alt='Product image'>";
+            echo "</div>";
+
+            $averageRating = ($review->getQtyRating() + $review->getPriceRating()) / 2;
+
+            echo "<div class='review'>";
+            echo "<strong>Category:</strong> " . $review->getProductType() . "<br>";
+            echo "<strong>Product Name:</strong> " . $review->getProductName() . "<br>";
+            echo "<strong>Quality Rating:</strong> " . $review->getQtyRating() . "/5<br>";
+            echo "<strong>Price Rating:</strong> " . $review->getPriceRating() . "/5<br>";
+            echo "<strong>Overall Rating:</strong> " . number_format($averageRating, 1) . "/5<br>";
+            echo "<a href='productReview.php?id=" . $review->getReviewID() . "'class='view-button'>Read Full Review</a>";
+        }
+
         echo "</div>";
         echo "</div>";
     }

@@ -149,7 +149,7 @@ try {
             }
 
             echo "<div class='individual'>";
-            echo "<p><strong>" . $userName['Username'] . "</strong> ";
+            echo "<a href='../login/publicProfile.php?user_id=" . $userLoginID . "'><strong>" . $userName['Username'] . "</strong></a> ";
             echo "<small>" . htmlspecialchars($comment->getCommentDateAndTime()) . "</small></p>";
             echo "<p>" . htmlspecialchars($comment->getCommentText()) . "</p>";
             echo "</div>";
@@ -162,7 +162,7 @@ try {
 echo "</div>";
 
 // Display comment form only if logged in
-if ($_SESSION['Active']) { ?>
+if ($_SESSION['Active'] && !$_SESSION['IsAdmin']) { ?>
     <html>
     <form method="post">
         <label for="comment">Write your comment here: </label>
@@ -171,7 +171,7 @@ if ($_SESSION['Active']) { ?>
         <input type="submit" value="Submit Comment">
     </form>
     </html>
-<?php } else {?>
+<?php } elseif (!$_SESSION['Active'] && !$_SESSION['IsAdmin']) {?>
     <p>Please <a href="../login/login.php">login</a> to post a comment.</p>
 <?php } ?>
 

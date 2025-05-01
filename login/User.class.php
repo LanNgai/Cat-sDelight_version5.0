@@ -1,5 +1,5 @@
 <?php
-
+include_once "Login.class.php";
 class User extends Login
 {
     private $profile;

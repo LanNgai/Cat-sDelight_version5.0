@@ -17,9 +17,15 @@
                 <?php }
                 ?>
             </div>
-            <div>
-                <a href="login/login.php" style="float: right">Login</a>
-            </div>
+            <?php if (!$_SESSION['Active']) {?>
+                <div>
+                    <a href="login/login.php" style="float: right">Login</a>
+                </div>
+            <?php } else {?>
+                <div>
+                    <a href="login/logout.php" style="float: right">Login Out</a>
+                </div>
+            <?php }?>
         </nav>
         <h1 class="title"> Cat's Delight </h1>
 

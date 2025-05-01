@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Change Username</title>
+<?php require_once "../../templates/header.php"?>
+
+<title>Change Password</title>
     <link rel="stylesheet" href="css/changeDetails.css">
 </head>
 <body>
@@ -16,17 +13,16 @@
     <div class="accountnav">
         <button class="dropdownButton">Settings</button>
         <div class="dropdownContent">
+            <a href="changeUsername.php">Change Username</a>
             <a href="changeEmail.php">Change Email</a>
-            <a href="changePassword.php">Change Password</a>
             <a href="changeBio.php">Edit Bio</a>
-            <a href="changePfp.php">Change Profile Picture</a>
             <a href="../logout.php">Logout</a>
         </div>
     </div>
 </nav>
 <div class="change-details-container">
     <h3>Change Account Details</h3>
-    <form class="change-details-form" method="post" action="../update/updateDetails.php">
+    <form class="change-details-form" method="post" action="../update/updatePassword.php">
         <!-- TODO: add toggle password visibility -->
         New Password:
         <br>

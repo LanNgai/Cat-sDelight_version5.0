@@ -102,19 +102,35 @@
                     );
                     ?>
                     <div class='box'>
-                        <div class='thumbnail'>
-                            <?php
-                            $imagePath = $product->getProductImage() ? '../data/images/' . $product->getProductImage() : '../data/images/placeholders/PlaceHolderProduct.png';
-                            ?>
-                            <img src="<?php echo $imagePath; ?>" alt="<?php echo $product->getProductName(); ?>">
-                        </div>
-                        <div class='product'>
-                            <strong>Category:</strong> <?php echo $product->getProductType(); ?><br>
-                            <strong>Product Name:</strong> <?php echo $product->getProductName(); ?><br>
-                            <strong>Manufacturer:</strong> <?php echo $product->getProductManufacturer(); ?><br>
-                            <a href='productDetail.php?id=<?php echo $product->getProductID(); ?>' class='view-button'>View Details</a>
+
+
+                            <?php if ($_SESSION['IsAdmin'] && $_SESSION['Active']) { ?>
+                            <div class='thumbnail'>
+                                <?php
+                                $imagePath = $product->getProductImage() ? '../data/images/' . $product->getProductImage() : '../data/images/placeholders/PlaceHolderProduct.png';
+                                ?>
+                                <img src="<?php echo $imagePath; ?>" alt="<?php echo $product->getProductName(); ?>">
+                            </div>
+                            <div class='product'>
+                                <strong>Category:</strong> <?php echo $product->getProductType(); ?><br>
+                                <strong>Product Name:</strong> <?php echo $product->getProductName(); ?><br>
+                                <strong>Manufacturer:</strong> <?php echo $product->getProductManufacturer(); ?><br>
+                                <a href='productDetail.php?id=<?php echo $product->getProductID(); ?>' class='view-button'>View Details</a>
                             <a href='updateProduct.php?id=<?php echo htmlspecialchars($product->getProductID()); ?>' class='view-button'>Update</a>
                             <a href='deleteProduct.php?id=<?php echo htmlspecialchars($product->getProductID()); ?>' class='view-button' id="delete">Delete</a>
+                            <?php } else {?>
+                                <div class='thumbnail'>
+                                    <?php
+                                    $imagePath = $product->getProductImage() ? '../data/images/' . $product->getProductImage() : '../data/images/placeholders/PlaceHolderProduct.png';
+                                    ?>
+                                    <img src="<?php echo $imagePath; ?>" alt="<?php echo $product->getProductName(); ?>">
+                                </div>
+                                <div class='product'>
+                                    <strong>Category:</strong> <?php echo $product->getProductType(); ?><br>
+                                    <strong>Product Name:</strong> <?php echo $product->getProductName(); ?><br>
+                                    <strong>Manufacturer:</strong> <?php echo $product->getProductManufacturer(); ?><br>
+                                    <a href='productDetail.php?id=<?php echo $product->getProductID(); ?>' class='view-button'>View Details</a>
+                                    <?php }?>
                         </div>
                     </div>
                     <?php

@@ -5,7 +5,7 @@
     include "login-validation.php";
     require "../templates/footer.php";
     require "UserProfile.class.php";
-    require "Login.class.php";
+    require_once "Login.class.php";
     require "User.class.php";
 
     session_start();
@@ -55,7 +55,6 @@
             <a href="change/changeEmail.php">Change Email</a>
             <a href="change/changePassword.php">Change Password</a>
             <a href="change/changeBio.php">Edit Bio</a>
-            <a href="change/changePfp.php">Change Profile Picture</a>
             <a href="logout.php">Logout</a>
         </div>
     </div>

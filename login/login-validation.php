@@ -31,6 +31,7 @@ if (isset($_POST['submit'])) {
             } else if ($user_data['LoginID'] == $admin_ID['AdminLoginID']) {
                 $_SESSION['Active'] = true;
                 $_SESSION['IsAdmin'] = true;
+                $_SESSION['userLoginID'] = $user_data['LoginID'];
                 header("Location: adminPage.php?id=" . $user_data['LoginID']);
                 exit();
             }

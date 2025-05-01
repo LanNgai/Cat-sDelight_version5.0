@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Change Username</title>
+<?php require_once "../../templates/header_sessions.php"?>
+
+<title>Change Bio</title>
     <link rel="stylesheet" href="css/changeDetails.css">
 </head>
 <body>
@@ -16,24 +13,51 @@
     <div class="accountnav">
         <button class="dropdownButton">Settings</button>
         <div class="dropdownContent">
+            <a href="changeUsername.php">Change Username</a>
             <a href="changeEmail.php">Change Email</a>
             <a href="changePassword.php">Change Password</a>
-            <a href="changeBio.php">Edit Bio</a>
-            <a href="changePfp.php">Change Profile Picture</a>
-            <a href="../logout.php">Logout</a>
+\            <a href="../logout.php">Logout</a>
         </div>
     </div>
 </nav>
 <div class="change-details-container">
     <h3>Change Account Details</h3>
     <!-- TODO: Write php file to handle bio change. -->
-    <form class="change-details-form" method="post" action="../update/updateDetails.php">
+    <form class="change-details-form" method="post" action="../update/updateBio.php">
         Change your bio:
         <br>
         <?php
-        $bio_file = file('../placeholders/bio.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $bio = $bio_file[0];
+        try {
+            require "../../backend/DBconnect.php";
+            require "../../login/UserProfile.class.php";
+            require "../../login/User.class.php";
+            
+            $id = $_SESSION['userLoginID'];
+            $sql = "SELECT login.Username, 
+                            login.Email, 
+                            login.Password,
+                            profile.Bio,
+                            profile.ProfileImage AS Picture
+                            FROM login
+                            JOIN user ON login.LoginID = user.UserLoginID
+                            JOIN profile ON user.UserLoginID = profile.UserLoginID
+                            WHERE login.LoginID = :id";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        }catch (PDOException $e){
+            echo $e->getMessage();
+        }
+
+        $userProfile = new UserProfile($result["Bio"], $result["Picture"]);
+        $user = new User($id, $result["Username"], $result["Email"], $result["Password"], $userProfile);
+        $bio = $userProfile->getBio();
         ?>
+
+
         <textarea rows="10" cols="50" name="bio"><?php echo htmlspecialchars($bio); ?></textarea>
         <br><br>
         Your password:
