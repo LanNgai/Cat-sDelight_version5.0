@@ -20,7 +20,6 @@ if (isset($_POST['submit'])) {
         $user_ID = $stmt_for_user->fetch(PDO::FETCH_ASSOC);
         $admin_ID = $stmt_for_admin->fetch(PDO::FETCH_ASSOC);
 
-        // TODO: Remember to put hashed values for the passwords stored in the DB!!!
         if (!empty($user_data) && password_verify($user_password, $user_data['Password'])) {
             if($user_data['LoginID'] == $user_ID['UserLoginID']) {
                 $_SESSION['Active'] = true;

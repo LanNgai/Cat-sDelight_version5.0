@@ -13,7 +13,6 @@
                 session_start();
                 if ($_SESSION['Active'] && !$_SESSION['IsAdmin']) { ?>
                     <a href="login/displayProfile.php">Profile</a>
-
                 <?php }
                 ?>
             </div>
