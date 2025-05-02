@@ -22,10 +22,29 @@ if (empty($new_pass) || empty($verify_pass) || empty($old_password)) {
         if (!($old_password = $database_password)) {
             echo "Old password is wrong.";
         } else {
-            $sql = "UPDATE login SET Password = '$new_pass' WHERE LoginID = '$id'";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            echo "Password updated.";
+            if (password_validation($new_pass)) {
+                $sql = "UPDATE login SET Password = '$new_pass' WHERE LoginID = '$id'";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                echo "Password updated.";
+            } else {
+                echo "Password does not meet requirements.";
+            }
         }
     }
+}
+
+//Function to validate passwords. the password given must have a number, a capital letter and a symbol.
+function password_validation($password)
+{
+    //Check for at least one number
+    $hasNumber = preg_match('/\d/', $password);
+
+    //Check for at least one capital letter
+    $hasCapital = preg_match('/[A-Z]/', $password);
+
+    //Check for at least one symbol
+    $hasSymbol = preg_match('/[^a-zA-Z0-9]/', $password);
+
+    return ($hasNumber && $hasCapital && $hasSymbol);
 }

@@ -70,19 +70,35 @@ try {
 //Location update/updateDetails.php
 //The user is asked to enter the new password twice to confirm.
 //It is then compared to see if it's a match.
-if (empty($username) || empty($password) || empty($confirm_password) || empty($email)) {
-    die("All fields are required.");
-}else{
-    if ($password !== $confirm_password) {
-        die("Passwords do not match.");
-
-    }else if(!validateEmailFormat($email)){
-        echo "The email address '$email' is invalid.";
+if (empty($new_pass) || empty($verify_pass) || empty($old_password)) {
+    echo "Please enter all fields.";
+} else {
+    if ($new_pass != $verify_pass) {
+        echo "New password did not match.";
+    } else {
+        if (!($old_password = $database_password)) {
+            echo "Old password is wrong.";
+        } else {
+            $sql = "UPDATE login SET Password = '$new_pass' WHERE LoginID = '$id'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            echo "Password updated.";
+        }
     }
-    else{
-        echo "You Have Updated Your Details!";
+}
 
-        echo "<br>";
-        echo "Click here to <a href='../login.php'>Login</a>";
-    }
+//Location: login/update/updatePassword.php
+//Function to validate passwords. the password given must have a number, a capital letter and a symbol.
+function password_validation($password)
+{
+    //Check for at least one number
+    $hasNumber = preg_match('/\d/', $password);
+
+    //Check for at least one capital letter
+    $hasCapital = preg_match('/[A-Z]/', $password);
+
+    //Check for at least one symbol
+    $hasSymbol = preg_match('/[^a-zA-Z0-9]/', $password);
+
+    return ($hasNumber && $hasCapital && $hasSymbol);
 }

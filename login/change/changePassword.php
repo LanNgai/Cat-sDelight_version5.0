@@ -38,6 +38,9 @@
         <br><br>
         <input type="submit" value="submit">
     </form>
+    <div>
+        <p>Password must contain 1 capital letter, 1 symbol and 1 number.</p>
+    </div>
 </div>
 </body>
 </html>
