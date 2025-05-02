@@ -23,7 +23,8 @@ if (empty($new_pass) || empty($verify_pass) || empty($old_password)) {
             echo "Old password is wrong.";
         } else {
             if (password_validation($new_pass)) {
-                $sql = "UPDATE login SET Password = '$new_pass' WHERE LoginID = '$id'";
+                $hashed_password = hashPassword($new_pass);
+                $sql = "UPDATE login SET Password = '$hashed_password' WHERE LoginID = '$id'";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
                 echo "Password updated.";
@@ -47,4 +48,9 @@ function password_validation($password)
     $hasSymbol = preg_match('/[^a-zA-Z0-9]/', $password);
 
     return ($hasNumber && $hasCapital && $hasSymbol);
+}
+
+//Function using php built-in password hash function.
+function hashPassword($password) {
+    return password_hash($password, PASSWORD_DEFAULT);
 }
