@@ -1,4 +1,4 @@
-//form to add a product
+<!-- form to add a product -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,7 @@
         <div class="review">
             <h1 id="title">Add New Product</h1>
 
-            //input product name
+            <!-- input product name -->
             <div class="form-group">
                 <label for="pName">Product Name*</label> <br>
                 <input type="text" id="product_name" name="pName" required class="form-control">
@@ -22,7 +22,7 @@
 
             <br>
 
-            //choose a category
+            <!-- choose a category -->
             <div class="form-group">
                 <label for="category">Category*</label> <br>
                 <select id="product_type" name="category" required class="form-control">
@@ -36,7 +36,7 @@
 
             <br>
   
-            //input category
+            <!-- input category -->
             <div class="form-group">
                 <label for="manufacturer">Manufacturer*</label> <br>
                 <input type="text" id="manufacturer" name="manufacturer" required class="form-control">
@@ -44,7 +44,7 @@
 
             <br>
          
-            //input description
+            <!-- input description -->
             <div class="form-group">
                 <label for="description">Product Description*</label> <br>
                 <textarea id="description" name="description" rows="10" cols="50" required class="form-control"></textarea>
@@ -52,7 +52,7 @@
 
             <br>
 
-            //input link to product
+            <!-- input link to product -->
             <div class="form-group">
                 <label for="product_link">Product Link (URL)*</label> <br>
                 <input type="url" id="product_link" name="product_link" required class="form-control"
@@ -61,7 +61,7 @@
 
             <br>
     
-            //select image (non-functioning)
+            <!-- select image (non-functioning) -->
             <div class="form-group">
                 <label for="product_image">Product Image*</label> <br>
                 <input type="file" id="product_image" name="product_image" accept="image/*" required class="form-control">
