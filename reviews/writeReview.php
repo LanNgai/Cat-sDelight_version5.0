@@ -33,6 +33,7 @@ $unreviewedProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <label for="productID">Select a Product</label>
                 <br>
+                <!-- check if there is unreviewed products -->
                 <?php if (empty($unreviewedProducts)): ?>
                     <p>No products available to review.</p>
                     <select id="productID" name="productID" disabled>
