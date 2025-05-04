@@ -3,11 +3,7 @@ session_start();
 require_once "../backend/DBconnect.php";
 require_once "products.class.php";
 
-//if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
-//    header("Location: ../login/login.php?error=" . urlencode("You must be logged in as an admin to update products."));
-//    exit;
-//}
-
+//check if valid ID 
 if (!isset($_GET["id"]) || !is_numeric($_GET["id"])) {
     header("Location: products.php?error=" . urlencode("Invalid or missing product ID."));
     exit;
@@ -17,6 +13,7 @@ $productId = (int)$_GET["id"];
 $product = null;
 
 try {
+    //sql query to retrieve product details
     $sql = "SELECT *
             FROM products WHERE ProductID = :id";
     $stmt = $conn->prepare($sql);
@@ -52,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $productLink = trim($_POST['product_link'] ?? '');
     $productImage = $product->getProductImage();
 
-
+    //check if everything is filled out
     if (empty($productName) || empty($productType) || empty($productDescription) || empty($productManufacturer) || empty($productLink)) {
         $error = "All required fields must be filled.";
     } elseif (!in_array($productType, ['Toy', 'Food', 'Litter', 'Miscellaneous'])) {
@@ -61,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error = "Invalid product link URL.";
     } else {
         try {
+            //sql query to update product details
             $sql = "UPDATE products
                     SET ProductName = :name, ProductType = :type, ProductDescription = :description,
                         ProductManufacturer = :manufacturer, ProductImage = :image, ProductLink = :link
@@ -93,6 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="css/AddProduct.css">
 </head>
 <body>
+<!-- navigation bar -->
 <nav>
     <?php require "../templates/topnav.php"; ?>
 </nav>
@@ -103,6 +102,7 @@ if (isset($error)) {
 }
 ?>
 
+<!-- form filled in with product details -->
 <form method="post">
     <div class="product">
         <h1 id="title">Update Product</h1>
