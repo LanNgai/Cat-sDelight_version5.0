@@ -3,6 +3,7 @@ session_start();
 require "../products/products.class.php";
 require "../backend/DBconnect.php";
 
+// retrieve product info
 $sql = "SELECT p.ProductID, p.ProductName, p.ProductType
         FROM products p
         LEFT JOIN reviews r ON p.ProductID = r.ProductID
@@ -25,6 +26,7 @@ $unreviewedProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <title>Write a Review</title>
     </head>
     <body>
+        <!-- form to write review -->
         <form method="post" action="postReview.php" enctype="multipart/form-data">
             <div class="review">
                 <h1 id="title">Write a Review</h1>
